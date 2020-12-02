@@ -11,6 +11,7 @@ namespace MyHobbyPal.Api.Mutations
         {
             Hobby = hobby;
             PersonHobbyLink = personHobbyLink;
+
         }
     }
 }
