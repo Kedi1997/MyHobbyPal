@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyHobbyPal.Client\MyHobbyPal.Client.csproj" />
     <ProjectReference Include="..\MyHobbyPal.GraphData\MyHobbyPal.GraphData.csproj" />
   </ItemGroup>
 	
