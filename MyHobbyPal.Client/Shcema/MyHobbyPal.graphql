@@ -1,0 +1,92 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  persons: [PersonType!]!
+  person(personId: String partitionKey: String givenName: String familyName: String): [PersonType!]!
+}
+
+type Mutation {
+  updatePerson(input: UpdatePersonInput!): PersonPayload!
+  addPerson(input: AddPersonInput!): PersonPayload!
+  upsertHobbyForPerson(input: AddHobbyForPersonInput!): AddHobbyForPersonPayload!
+}
+
+type PersonPayload {
+  person: Person!
+}
+
+type PersonType {
+  personId: String!
+  partitionKey: String!
+  givenName: String!
+  familyName: String!
+  phoneNumbers: [String!]!
+  hobbies: [HobbyType!]!
+}
+
+type AddHobbyForPersonPayload {
+  hobby: Hobby!
+  personHobbyLink: PersonHobbyLink!
+}
+
+input UpdatePersonInput {
+  personId: String!
+  partitionKey: String!
+  givenName: String
+  familyName: String
+  phoneNumbers: [String!]
+}
+
+input AddPersonInput {
+  givenName: String!
+  familyName: String!
+  phoneNumbers: [String!]
+}
+
+input AddHobbyForPersonInput {
+  personId: String!
+  partitionKey: String!
+  hobbyName: String!
+  difficulty: Float!
+  yearsPracticed: Int!
+  expertiseAchieved: Float!
+  hobbyId: String
+  personHobbyId: String
+}
+
+type PersonHobbyLink {
+  personHobbyId: String
+  partitionKey: String
+  yearsPracticed: Int!
+  expertiseAchieved: Float!
+}
+
+type Hobby {
+  hobbyId: String
+  partitionKey: String
+  name: String
+  difficulty: Float!
+}
+
+type HobbyType {
+  hobby: Hobby!
+  yearsPracticed: Int!
+  expertiseAchieved: Float!
+}
+
+type Person {
+  personId: String
+  partitionKey: String
+  givenName: String
+  familyName: String
+  phoneNumbers: [String]
+}
+
+"The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."
+directive @defer("If this argument label has a value other than null, it will be passed on to the result of this defer directive. This label is intended to give client applications a way to identify to which fragment a deferred result belongs to." label: String "Deferred when true." if: Boolean) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"The `@stream` directive may be provided for a field of `List` type so that the backend can leverage technology such as asynchronous iterators to provide a partial list in the initial response, and additional list items in subsequent responses. `@include` and `@skip` take precedence over `@stream`."
+directive @stream("If this argument label has a value other than null, it will be passed on to the result of this stream directive. This label is intended to give client applications a way to identify to which fragment a streamed result belongs to." label: String "The initial elements that shall be send down to the consumer." initialCount: Int! "Streamed when true." if: Boolean!) on FIELD

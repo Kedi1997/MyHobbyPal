@@ -1,0 +1,11 @@
+{
+  "Schemas": [
+    {
+      "Name": "MyHobbyPal",
+      "Type": "http",
+      "File": "MyHobbyPal.graphql",
+      "Url": "https://localhost:5001/graphql"
+    }
+  ],
+  "ClientName": "MyHobbyPalClient"
+}
