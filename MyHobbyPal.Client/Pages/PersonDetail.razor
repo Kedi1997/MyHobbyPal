@@ -1,0 +1,11 @@
+﻿@page "/persondetail/{personId}/{partitionKey}"
+
+<h3>PersonDetail</h3>
+
+@code {
+
+    [Parameter]
+    public string PersonId { get; set; }
+    [Parameter]
+    public string PartitionKey { get; set; }
+}

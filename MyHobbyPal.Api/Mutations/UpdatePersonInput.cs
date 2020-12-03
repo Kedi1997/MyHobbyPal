@@ -11,9 +11,9 @@ namespace MyHobbyPal.Api.Mutations
         public string PartitionKey { get; set; }
         public string? GivenName { get; set; }
         public string? FamilyName { get; set; }
-        public IList<string>? PhoneNumbers { get; set; } = new List<string>();
+        public string[] PhoneNumbers { get; set; } = new string[] { };
 
-        public UpdatePersonInput(string personId, string partitionKey, string? givenName, string? familyName, IList<string>? phoneNumbers)
+        public UpdatePersonInput(string personId, string partitionKey, string? givenName, string? familyName, string[] phoneNumbers)
         {
             PersonId = personId;
             PartitionKey = partitionKey;

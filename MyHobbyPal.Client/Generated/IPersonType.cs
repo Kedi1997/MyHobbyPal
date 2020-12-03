@@ -5,7 +5,8 @@ using StrawberryShake;
 
 namespace MyHobbyPal.Client
 {
-    public interface IPersonType
+    [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
+    public partial interface IPersonType
     {
         string PersonId { get; }
 
@@ -16,5 +17,7 @@ namespace MyHobbyPal.Client
         string GivenName { get; }
 
         IReadOnlyList<string> PhoneNumbers { get; }
+
+        global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyType> Hobbies { get; }
     }
 }

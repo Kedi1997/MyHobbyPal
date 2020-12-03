@@ -5,7 +5,8 @@ using StrawberryShake;
 
 namespace MyHobbyPal.Client
 {
-    public class PersonType
+    [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
+    public partial class PersonType
         : IPersonType
     {
         public PersonType(
@@ -13,13 +14,15 @@ namespace MyHobbyPal.Client
             string partitionKey, 
             string familyName, 
             string givenName, 
-            IReadOnlyList<string> phoneNumbers)
+            IReadOnlyList<string> phoneNumbers, 
+            global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyType> hobbies)
         {
             PersonId = personId;
             PartitionKey = partitionKey;
             FamilyName = familyName;
             GivenName = givenName;
             PhoneNumbers = phoneNumbers;
+            Hobbies = hobbies;
         }
 
         public string PersonId { get; }
@@ -31,5 +34,7 @@ namespace MyHobbyPal.Client
         public string GivenName { get; }
 
         public IReadOnlyList<string> PhoneNumbers { get; }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyType> Hobbies { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace MyHobbyPal.GraphData
         [PartitionKey]
         public string PartitionKey { get; set; }
         public string Name { get; set; }
-        public double Difficulty { get; set; }
+        public double? Difficulty { get; set; }
         #endregion
     }
 }

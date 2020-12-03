@@ -9,9 +9,9 @@ namespace MyHobbyPal.Api.Mutations
     {
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public IList<string>? PhoneNumbers { get; set; } = new List<string>();
+        public string[] PhoneNumbers { get; set; } = new string[] { };
 
-        public AddPersonInput(string givenName, string familyName, IList<string>? phoneNumbers)
+        public AddPersonInput(string givenName, string familyName, string[] phoneNumbers)
         {
             GivenName = givenName;
             FamilyName = familyName;

@@ -19,12 +19,12 @@ type PersonPayload {
 }
 
 type PersonType {
-  personId: String!
-  partitionKey: String!
-  givenName: String!
-  familyName: String!
-  phoneNumbers: [String!]!
-  hobbies: [HobbyType!]!
+  personId: String
+  partitionKey: String
+  givenName: String
+  familyName: String
+  phoneNumbers: [String!]
+  hobbies: [HobbyType!]
 }
 
 type AddHobbyForPersonPayload {
@@ -37,13 +37,13 @@ input UpdatePersonInput {
   partitionKey: String!
   givenName: String
   familyName: String
-  phoneNumbers: [String!]
+  phoneNumbers: [String!]!
 }
 
 input AddPersonInput {
   givenName: String!
   familyName: String!
-  phoneNumbers: [String!]
+  phoneNumbers: [String!]!
 }
 
 input AddHobbyForPersonInput {
@@ -68,13 +68,13 @@ type Hobby {
   hobbyId: String
   partitionKey: String
   name: String
-  difficulty: Float!
+  difficulty: Float
 }
 
 type HobbyType {
-  hobby: Hobby!
-  yearsPracticed: Int!
-  expertiseAchieved: Float!
+  hobby: Hobby
+  yearsPracticed: Int
+  expertiseAchieved: Float
 }
 
 type Person {

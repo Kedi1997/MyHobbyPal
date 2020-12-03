@@ -5,12 +5,15 @@ using StrawberryShake;
 
 namespace MyHobbyPal.Client
 {
-    public class GetAllPersonsOperation
+    [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
+    public partial class GetAllPersonsOperation
         : IOperation<IGetAllPersons>
     {
         public string Name => "getAllPersons";
 
         public IDocument Document => Queries.Default;
+
+        public OperationKind Kind => OperationKind.Query;
 
         public Type ResultType => typeof(IGetAllPersons);
 

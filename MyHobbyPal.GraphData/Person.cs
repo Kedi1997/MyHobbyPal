@@ -13,7 +13,7 @@ namespace MyHobbyPal.GraphData
         public string PartitionKey { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public ICollection<string> PhoneNumbers { get; set; } = new List<string>();
+        public string[] PhoneNumbers { get; set; } = new string[] { };
         #endregion
 
     }

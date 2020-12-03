@@ -1,0 +1,17 @@
+﻿query getAllPersons{
+  persons{
+    personId
+    partitionKey
+    familyName
+    givenName
+    phoneNumbers
+    hobbies{
+      hobby{
+        name
+        difficulty
+      }
+      yearsPracticed
+      expertiseAchieved
+    }
+  }
+}

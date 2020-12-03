@@ -1,28 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Shcema\Queries.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.35" />
+    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.98" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Remove="Shcema\Queries.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Shcema\Queries.graphql" />
+    <Watch Remove="Queries.graphql" />
   </ItemGroup>
 
 </Project>

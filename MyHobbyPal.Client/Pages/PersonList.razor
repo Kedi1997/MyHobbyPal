@@ -1,6 +1,59 @@
 ﻿@page "/personlist"
+@inject HttpClient Http
+@inject IMyHobbyPalClient MyHobbyPalClient
+@using MyHobbyPal.Client
 
-<h3>Persons</h3>
+<h3>Person list</h3>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>PersonId</th>
+            <th>PartitionKey</th>
+            <th>GivenName</th>
+            <th>FamilyName</th>
+            <th>PhoneNumbers</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (persons.Count>0 )
+        {
+            @foreach (var person in persons)
+            {
+        <tr>
+            <td>@person.PersonId</td>
+            <td>@person.PartitionKey</td>
+            <td>@person.GivenName</td>
+            <td>@person.FamilyName</td>
+            <td>@person.PhoneNumbers</td>
+            <td>
+                <a href="@($"persondetail/{person.PersonId}/{person.PartitionKey}")" class="btn btn-primary">Detail</a>
+                <i class="fas fa-info=circle"></i>
+            </td>
+        </tr>
+            }
+        }
+        else
+        {
+            <h4>Loading...</h4>
+        }
+
+    </tbody>
+</table>
 @code {
+    private IList<IPersonType> persons = new List<IPersonType>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await MyHobbyPalClient.GetAllPersonsAsync();
+        result.EnsureNoErrors();
+
+        persons = result.Data!.Persons.ToList<IPersonType>();
+        //foreach(var p in persons)
+        //{
+        //    var phoneNumbers = p.PhoneNumbers;
+        //}
+        StateHasChanged();
+    }
+
 }

@@ -39,7 +39,7 @@ namespace MyHobbyPal.Api
             {
                 return new JsonSerializerSettings { ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() }, Formatting = Formatting.Indented };
             });
-
+            services.AddCors();
             try
             {
                 var cosmosAccountName = Configuration["cosmos:cosmos-account-name"];
@@ -65,6 +65,9 @@ namespace MyHobbyPal.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
+            app.UseCors(
+                options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+            );
 
             app.UseEndpoints(endpoints =>
             {
