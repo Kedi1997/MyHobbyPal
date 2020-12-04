@@ -1,4 +1,5 @@
 ﻿using HotChocolate;
+using MyHobbyPal.Api.Types;
 using MyHobbyPal.GraphData;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,58 @@ namespace MyHobbyPal.Api.Mutations
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<PersonPayload> UpdatePersonAsync(UpdatePersonInput input)
+        //public async Task<PersonPayload> UpdatePersonAsync(UpdatePersonInput input)
+        //{
+        //    var person = new Person
+        //    {
+        //        PartitionKey = input.PartitionKey,
+        //        PersonId = input.PersonId,
+        //        FamilyName = input.FamilyName,
+        //        GivenName = input.GivenName,
+        //        PhoneNumbers = input.PhoneNumbers
+        //    };
+
+        //    var personType = new PersonType
+        //    {
+        //        PartitionKey = input.PartitionKey,
+        //        PersonId = input.PersonId,
+        //        FamilyName = input.FamilyName,
+        //        GivenName = input.GivenName,
+        //        PhoneNumbers = input.PhoneNumbers
+        //    };
+
+        //    await repository.UpdatePerson(person);
+        //    return new PersonPayload(personType);
+        //}
+
+        //public async Task<PersonPayload> AddPersonAsync(AddPersonInput input)
+        //{
+        //    var person = new Person
+        //    {
+        //        FamilyName = input.FamilyName,
+        //        GivenName = input.GivenName,
+        //        PhoneNumbers = input.PhoneNumbers
+        //    };
+
+        //    var personType = new PersonType
+        //    {
+        //        FamilyName = input.FamilyName,
+        //        GivenName = input.GivenName,
+        //        PhoneNumbers = input.PhoneNumbers
+        //    };
+
+        //    await repository.AddPerson(person);
+
+        //    return new PersonPayload(personType);
+        //}
+
+        public async Task<PersonPayload> UpsertPersonAsync(UpsertPersonInput input)
         {
+            if (string.IsNullOrEmpty(input.PersonId) && string.IsNullOrEmpty(input.PartitionKey))
+            {
+                input.PersonId = Guid.NewGuid().ToString("D");
+                input.PartitionKey = Guid.NewGuid().ToString("D");
+            }
             var person = new Person
             {
                 PartitionKey = input.PartitionKey,
@@ -27,22 +78,17 @@ namespace MyHobbyPal.Api.Mutations
                 PhoneNumbers = input.PhoneNumbers
             };
 
-            await repository.UpdatePerson(person);
-            return new PersonPayload(person);
-        }
-
-        public async Task<PersonPayload> AddPersonAsync(AddPersonInput input)
-        {
-            var person = new Person
+            var personType = new PersonType
             {
+                PartitionKey = input.PartitionKey,
+                PersonId = input.PersonId,
                 FamilyName = input.FamilyName,
                 GivenName = input.GivenName,
                 PhoneNumbers = input.PhoneNumbers
             };
 
-            await repository.AddPerson(person);
-
-            return new PersonPayload(person);
+            await repository.UpsertPerson(person);
+            return new PersonPayload(personType);
         }
 
         //public async Task<HobbyPayload> UpdateHobbyAsync(UpdateHobbyInput input)

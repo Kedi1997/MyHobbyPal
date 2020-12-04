@@ -111,6 +111,8 @@ namespace MyHobbyPal.Client
 
             return new Hobby
             (
+                DeserializeNullableString(obj, "hobbyId"),
+                DeserializeNullableString(obj, "partitionKey"),
                 DeserializeNullableString(obj, "name"),
                 DeserializeNullableFloat(obj, "difficulty")
             );

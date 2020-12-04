@@ -79,93 +79,93 @@ namespace MyHobbyPal.GraphData
             return (IList<Person>)queryResult.Result;
         }
 
-        public async Task AddPerson(Person person)
-        {
-            try
-            {
-                var graph = await GetCosmosClientGraph(environmentName);
-                person.PersonId = Guid.NewGuid().ToString("D");
-                person.PartitionKey = Guid.NewGuid().ToString("D");
+        //public async Task AddPerson(Person person)
+        //{
+        //    try
+        //    {
+        //        var graph = await GetCosmosClientGraph(environmentName);
+        //        person.PersonId = Guid.NewGuid().ToString("D");
+        //        person.PartitionKey = Guid.NewGuid().ToString("D");
 
-                var queryResult = await graph.UpsertVertex<Person>(person);
-                if (!queryResult.IsSuccessful) throw queryResult.Error;
-            }
-            catch (Exception ex)
-            {
-                var baseEx = ex.GetBaseException();
-                throw;
-            }
-        }
+        //        var queryResult = await graph.UpsertVertex<Person>(person);
+        //        if (!queryResult.IsSuccessful) throw queryResult.Error;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var baseEx = ex.GetBaseException();
+        //        throw;
+        //    }
+        //}
 
-        public async Task UpdatePerson(Person person)
-        {
-            try
-            {
-                var graph = await GetCosmosClientGraph(environmentName);
-                var queryResult = await graph.UpsertVertex<Person>(person);
-                if (!queryResult.IsSuccessful) throw queryResult.Error;
-            }
-            catch(Exception ex)
-            {
-                var baseEx = ex.GetBaseException();
-                throw;
-            }
-        }
+        //public async Task UpdatePerson(Person person)
+        //{
+        //    try
+        //    {
+        //        var graph = await GetCosmosClientGraph(environmentName);
+        //        var queryResult = await graph.UpsertVertex<Person>(person);
+        //        if (!queryResult.IsSuccessful) throw queryResult.Error;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        var baseEx = ex.GetBaseException();
+        //        throw;
+        //    }
+        //}
 
-        public async Task AddHobby(Hobby hobby, string hobbyId, string partitionKey)
-        {
-            try
-            {
-                var graph = await GetCosmosClientGraph(environmentName);
-                hobby.HobbyId = hobbyId;
-                hobby.PartitionKey = partitionKey;
+        //public async Task AddHobby(Hobby hobby, string hobbyId, string partitionKey)
+        //{
+        //    try
+        //    {
+        //        var graph = await GetCosmosClientGraph(environmentName);
+        //        hobby.HobbyId = hobbyId;
+        //        hobby.PartitionKey = partitionKey;
 
-                var queryResult = await graph.UpsertVertex<Hobby>(hobby);
-                if (!queryResult.IsSuccessful) throw queryResult.Error;
-            }
-            catch (Exception ex)
-            {
-                var baseEx = ex.GetBaseException();
-                throw;
-            }
-        }
-        public async Task UpdateHobby(Hobby hobby)
-        {
-            try
-            {
-                var graph = await GetCosmosClientGraph(environmentName);
-                var queryResult = await graph.UpsertVertex<Hobby>(hobby);
-                if (!queryResult.IsSuccessful) throw queryResult.Error;
-            }
-            catch (Exception ex)
-            {
-                var baseEx = ex.GetBaseException();
-                throw;
-            }
-        }
+        //        var queryResult = await graph.UpsertVertex<Hobby>(hobby);
+        //        if (!queryResult.IsSuccessful) throw queryResult.Error;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var baseEx = ex.GetBaseException();
+        //        throw;
+        //    }
+        //}
+        //public async Task UpdateHobby(Hobby hobby)
+        //{
+        //    try
+        //    {
+        //        var graph = await GetCosmosClientGraph(environmentName);
+        //        var queryResult = await graph.UpsertVertex<Hobby>(hobby);
+        //        if (!queryResult.IsSuccessful) throw queryResult.Error;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var baseEx = ex.GetBaseException();
+        //        throw;
+        //    }
+        //}
 
-        public async Task<Hobby> GetHobbyById(string hobbyId, string partitionKey)
-        {
-            var graph = await GetCosmosClientGraph(environmentName);
-            var queryResult = await graph.ReadVertex<Hobby>(docId: hobbyId, partitionKey: partitionKey);
-            return queryResult.Result;
-        }
+        //public async Task<Hobby> GetHobbyById(string hobbyId, string partitionKey)
+        //{
+        //    var graph = await GetCosmosClientGraph(environmentName);
+        //    var queryResult = await graph.ReadVertex<Hobby>(docId: hobbyId, partitionKey: partitionKey);
+        //    return queryResult.Result;
+        //}
 
-        public async Task<IList<Hobby>> GetHobbyByName(string name)
-        {
-            var graph = await GetCosmosClientGraph(environmentName);
-            var queryResult = await graph.ExecuteGremlin<Hobby>($"g.V().HasLabel('{Constant.VertexLabel.Hobby}').has('{Constant.FieldName.Name}','{name}')");
-            return (IList<Hobby>)queryResult.Result;
-        }
+        //public async Task<IList<Hobby>> GetHobbyByName(string name)
+        //{
+        //    var graph = await GetCosmosClientGraph(environmentName);
+        //    var queryResult = await graph.ExecuteGremlin<Hobby>($"g.V().HasLabel('{Constant.VertexLabel.Hobby}').has('{Constant.FieldName.Name}','{name}')");
+        //    return (IList<Hobby>)queryResult.Result;
+        //}
 
-        public async Task<IList<Hobby>> GetAllHobby()
-        {
-            var graph = await GetCosmosClientGraph(environmentName);
-            var sql = $"SELECT * FROM c where c.label = '{Constant.VertexLabel.Hobby}'";
-            var queryResult = await graph.ExecuteGremlin<Hobby>($"g.V().hasLabel('{Constant.VertexLabel.Hobby}')");
+        //public async Task<IList<Hobby>> GetAllHobby()
+        //{
+        //    var graph = await GetCosmosClientGraph(environmentName);
+        //    var sql = $"SELECT * FROM c where c.label = '{Constant.VertexLabel.Hobby}'";
+        //    var queryResult = await graph.ExecuteGremlin<Hobby>($"g.V().hasLabel('{Constant.VertexLabel.Hobby}')");
 
-            return (IList<Hobby>)queryResult.Result;
-        }
+        //    return (IList<Hobby>)queryResult.Result;
+        //}
 
         public async Task UpsertHobbyForPerson(string personId, string partitionKey, Hobby hobby, PersonHobbyLink personHobbyLink)
         {
@@ -192,6 +192,21 @@ namespace MyHobbyPal.GraphData
             var graph = await GetCosmosClientGraph(environmentName);
             var queryResult = await graph.ExecuteGremlin<PersonHobbyLink>($"g.V().has('pk','{partitionKey}').outE().where(inV().has(id, '{hobbyId}'))");
             return (PersonHobbyLink)(PersonHobbyLink)queryResult.Result.First();
+        }
+
+        public async Task UpsertPerson(Person person)
+        {
+            try
+            {
+                var graph = await GetCosmosClientGraph(environmentName);
+                var queryResult = await graph.UpsertVertex<Person>(person);
+                if (!queryResult.IsSuccessful) throw queryResult.Error;
+            }
+            catch (Exception ex)
+            {
+                var baseEx = ex.GetBaseException();
+                throw;
+            }
         }
     }
 }

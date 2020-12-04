@@ -10,12 +10,20 @@ namespace MyHobbyPal.Client
         : IHobby1
     {
         public Hobby1(
+            string hobbyId, 
+            string partitionKey, 
             string name, 
             double? difficulty)
         {
+            HobbyId = hobbyId;
+            PartitionKey = partitionKey;
             Name = name;
             Difficulty = difficulty;
         }
+
+        public string HobbyId { get; }
+
+        public string PartitionKey { get; }
 
         public string Name { get; }
 

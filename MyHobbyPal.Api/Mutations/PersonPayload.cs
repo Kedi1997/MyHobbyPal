@@ -1,4 +1,5 @@
-﻿using MyHobbyPal.GraphData;
+﻿using MyHobbyPal.Api.Types;
+using MyHobbyPal.GraphData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace MyHobbyPal.Api.Mutations
 {
     public class PersonPayload
     {
-        public Person Person { get; }
+        public PersonType PersonType { get; }
 
-        public PersonPayload(Person person)
+        public PersonPayload(PersonType personType)
         {
-            Person = person;
+            PersonType = personType;
         }
                 
     }

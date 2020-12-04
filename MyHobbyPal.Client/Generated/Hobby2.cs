@@ -6,10 +6,10 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial class Hobby
-        : IHobby
+    public partial class Hobby2
+        : IHobby2
     {
-        public Hobby(
+        public Hobby2(
             string hobbyId, 
             string partitionKey, 
             string name, 

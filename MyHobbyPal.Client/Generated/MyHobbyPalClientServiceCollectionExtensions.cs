@@ -38,8 +38,14 @@ namespace MyHobbyPal.Client
                     sp.GetRequiredService<IClientOptions>().GetResultParsers(_clientName)));
 
             IOperationClientBuilder builder = serviceCollection.AddOperationClientOptions(_clientName)
+                .AddValueSerializer(() => new AddPersonInputSerializer())
+                .AddValueSerializer(() => new UpdatePersonInputSerializer())
+                .AddValueSerializer(() => new AddHobbyForPersonInputSerializer())
                 .AddResultParser(serializers => new GetAllPersonsResultParser(serializers))
                 .AddResultParser(serializers => new GetPersonByIdResultParser(serializers))
+                .AddResultParser(serializers => new AddPersonResultParser(serializers))
+                .AddResultParser(serializers => new UpdatePersonResultParser(serializers))
+                .AddResultParser(serializers => new AddHobbyForPersonResultParser(serializers))
                 .AddOperationFormatter(serializers => new JsonOperationFormatter(serializers))
                 .AddHttpOperationPipeline(builder => builder.UseHttpDefaultPipeline());
 

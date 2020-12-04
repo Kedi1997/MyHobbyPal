@@ -7,6 +7,8 @@
     phoneNumbers
     hobbies{
       hobby{
+        hobbyId
+        partitionKey
         name
         difficulty
       }
@@ -25,6 +27,8 @@ query getPersonById($personId: String! $partitionKey:String!){
         phoneNumbers
         hobbies{
           hobby{
+            hobbyId
+            partitionKey
             name
             difficulty
           }
@@ -32,4 +36,43 @@ query getPersonById($personId: String! $partitionKey:String!){
           expertiseAchieved
         }
     }
+}
+
+mutation addPerson($addperson: AddPersonInput!){
+  addPerson(input:$addperson){
+    person{
+      givenName
+      familyName
+      partitionKey
+      personId
+      phoneNumbers
+    }
+  }
+}
+
+mutation updatePerson($person: UpdatePersonInput!){
+  updatePerson(input:$person){
+    person{
+      partitionKey
+      personId
+      givenName
+      familyName
+      phoneNumbers
+    }
+  }
+}
+
+mutation addHobbyForPerson($addHobbyForPerson: AddHobbyForPersonInput!){
+  upsertHobbyForPerson(input:$addHobbyForPerson){
+    hobby{
+      hobbyId
+      partitionKey
+      name
+      difficulty
+    }
+    personHobbyLink{
+      expertiseAchieved
+      yearsPracticed
+    }
+  }
 }
