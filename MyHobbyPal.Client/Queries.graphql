@@ -15,3 +15,21 @@
     }
   }
 }
+
+query getPersonById($personId: String! $partitionKey:String!){
+    person(personId: $personId, partitionKey:$partitionKey ){
+        personId
+        partitionKey
+        familyName
+        givenName
+        phoneNumbers
+        hobbies{
+          hobby{
+            name
+            difficulty
+          }
+          yearsPracticed
+          expertiseAchieved
+        }
+    }
+}

@@ -8,6 +8,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>PersonId</th>
             <th>PartitionKey</th>
             <th>GivenName</th>
@@ -16,26 +17,30 @@
         </tr>
     </thead>
     <tbody>
-        @if (persons.Count>0 )
+        @if (persons.Count > 0)
         {
             @foreach (var person in persons)
             {
         <tr>
-            <td>@person.PersonId</td>
-            <td>@person.PartitionKey</td>
-            <td>@person.GivenName</td>
-            <td>@person.FamilyName</td>
-            <td>@person.PhoneNumbers</td>
             <td>
                 <a href="@($"persondetail/{person.PersonId}/{person.PartitionKey}")" class="btn btn-primary">Detail</a>
                 <i class="fas fa-info=circle"></i>
             </td>
+            <td>@person.PersonId</td>
+            <td>@person.PartitionKey</td>
+            <td>@person.GivenName</td>
+            <td>@person.FamilyName</td>
+            @foreach (var n in person.PhoneNumbers)
+            {
+                <td>@n.ToString()</td>
+            }
+
         </tr>
             }
         }
         else
         {
-            <h4>Loading...</h4>
+            <h5>Loading...</h5>
         }
 
     </tbody>

@@ -40,5 +40,41 @@ namespace MyHobbyPal.Client
 
             return _executor.ExecuteAsync(operation, cancellationToken);
         }
+
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonById>> GetPersonByIdAsync(
+            global::StrawberryShake.Optional<string> personId = default,
+            global::StrawberryShake.Optional<string> partitionKey = default,
+            global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            if (personId.HasValue && personId.Value is null)
+            {
+                throw new ArgumentNullException(nameof(personId));
+            }
+
+            if (partitionKey.HasValue && partitionKey.Value is null)
+            {
+                throw new ArgumentNullException(nameof(partitionKey));
+            }
+
+            return _executor.ExecuteAsync(
+                new GetPersonByIdOperation
+                {
+                    PersonId = personId, 
+                    PartitionKey = partitionKey
+                },
+                cancellationToken);
+        }
+
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonById>> GetPersonByIdAsync(
+            GetPersonByIdOperation operation,
+            global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            if (operation is null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            return _executor.ExecuteAsync(operation, cancellationToken);
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace MyHobbyPal.Client
 
             IOperationClientBuilder builder = serviceCollection.AddOperationClientOptions(_clientName)
                 .AddResultParser(serializers => new GetAllPersonsResultParser(serializers))
+                .AddResultParser(serializers => new GetPersonByIdResultParser(serializers))
                 .AddOperationFormatter(serializers => new JsonOperationFormatter(serializers))
                 .AddHttpOperationPipeline(builder => builder.UseHttpDefaultPipeline());
 

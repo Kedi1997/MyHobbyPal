@@ -1,6 +1,48 @@
 ﻿@page "/persondetail/{personId}/{partitionKey}"
+@inject IMyHobbyPalClient MyHobbyPalClient
 
 <h3>PersonDetail</h3>
+
+@if (Person == null)
+{
+    <h5>Loading...</h5>
+}
+else
+{
+    <h5>GivenName: @Person.GivenName</h5>
+    <h5>FamilyName: @Person.FamilyName</h5>
+    <h5>Phone Numbers:</h5>
+
+    @foreach (var n in Person.PhoneNumbers)
+    {
+        <h5> @n.ToString()</h5>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hobby Name</th>
+                <th>Difficulty</th>
+                <th>Years Practiced</th>
+                <th>Expertise Achieved</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var h in Person.Hobbies)
+            {
+                <tr>
+                    <td>@h.Hobby.Name</td>
+                    <td>@h.Hobby.Difficulty</td>
+                    <td>@h.YearsPracticed</td>
+                    <td>@h.ExpertiseAchieved</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+}
 
 @code {
 
@@ -8,4 +50,17 @@
     public string PersonId { get; set; }
     [Parameter]
     public string PartitionKey { get; set; }
+
+    public IPersonType1 Person { get; set; }
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var result = await MyHobbyPalClient.GetPersonByIdAsync(PersonId, PartitionKey);
+        result.EnsureNoErrors();
+        Person = result.Data!.Person.ToList<IPersonType1>().FirstOrDefault();
+
+    }
 }
