@@ -62,7 +62,8 @@ namespace MyHobbyPal.Api.Queries
                 {
                     Hobby = hobby,
                     YearsPracticed = personHobbyLink.YearsPracticed,
-                    ExpertiseAchieved = personHobbyLink.ExpertiseAchieved
+                    ExpertiseAchieved = personHobbyLink.ExpertiseAchieved,
+                    PersonHobbyId = personHobbyLink.PersonHobbyId
                 });
             }
 

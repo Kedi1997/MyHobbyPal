@@ -21,28 +21,28 @@ namespace MyHobbyPal.Client
         };
         private readonly byte[] _hash = new byte[]
         {
-            109,
-            66,
-            90,
-            115,
-            120,
-            48,
             106,
-            78,
-            83,
-            89,
-            77,
-            51,
-            99,
-            49,
-            122,
-            83,
-            66,
-            122,
+            79,
+            112,
+            73,
+            53,
+            82,
+            104,
+            68,
+            57,
+            47,
+            110,
+            56,
+            56,
+            80,
             109,
-            109,
-            43,
+            56,
+            116,
+            83,
+            87,
+            118,
             81,
+            65,
             61,
             61
         };
@@ -520,9 +520,12 @@ namespace MyHobbyPal.Client
             110,
             40,
             36,
-            97,
-            100,
-            100,
+            117,
+            112,
+            115,
+            101,
+            114,
+            116,
             72,
             111,
             98,
@@ -598,9 +601,12 @@ namespace MyHobbyPal.Client
             58,
             32,
             36,
-            97,
-            100,
-            100,
+            117,
+            112,
+            115,
+            101,
+            114,
+            116,
             72,
             111,
             98,
@@ -920,6 +926,20 @@ namespace MyHobbyPal.Client
             101,
             100,
             32,
+            112,
+            101,
+            114,
+            115,
+            111,
+            110,
+            72,
+            111,
+            98,
+            98,
+            121,
+            73,
+            100,
+            32,
             125
         };
 
@@ -958,8 +978,8 @@ namespace MyHobbyPal.Client
               }
             }
             
-            mutation upsertHobbyForPerson($addHobbyForPerson: UpsertHobbyForPersonInput!) {
-              upsertHobbyForPerson(input: $addHobbyForPerson) {
+            mutation upsertHobbyForPerson($upsertHobbyForPerson: UpsertHobbyForPersonInput!) {
+              upsertHobbyForPerson(input: $upsertHobbyForPerson) {
                 hobbyType {
                   ... hobbyDetail
                 }
@@ -983,6 +1003,7 @@ namespace MyHobbyPal.Client
               }
               expertiseAchieved
               yearsPracticed
+              personHobbyId
             }";
     }
 }

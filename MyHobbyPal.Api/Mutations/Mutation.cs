@@ -127,7 +127,7 @@ namespace MyHobbyPal.Api.Mutations
 
             var personHobbyLink = new PersonHobbyLink
             {
-                PersonHobbyId = string.IsNullOrEmpty(input.HobbyId) ? Guid.NewGuid().ToString("D") : input.PersonHobbyId,
+                PersonHobbyId = string.IsNullOrEmpty(input.PersonHobbyId) ? Guid.NewGuid().ToString("D") : input.PersonHobbyId,
                 PartitionKey = input.PartitionKey,
                 YearsPracticed = input.YearsPracticed,
                 ExpertiseAchieved = input.ExpertiseAchieved

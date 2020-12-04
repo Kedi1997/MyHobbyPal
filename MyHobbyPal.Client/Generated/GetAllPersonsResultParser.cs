@@ -87,7 +87,8 @@ namespace MyHobbyPal.Client
                 (
                     ParseGetAllPersonsPersonsHobbiesHobby(element, "hobby"),
                     DeserializeNullableFloat(element, "expertiseAchieved"),
-                    DeserializeNullableInt(element, "yearsPracticed")
+                    DeserializeNullableInt(element, "yearsPracticed"),
+                    DeserializeNullableString(element, "personHobbyId")
                 );
 
             }

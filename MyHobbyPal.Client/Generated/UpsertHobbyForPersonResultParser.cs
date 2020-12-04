@@ -60,7 +60,8 @@ namespace MyHobbyPal.Client
             (
                 ParseUpsertHobbyForPersonUpsertHobbyForPersonHobbyTypeHobby(obj, "hobby"),
                 DeserializeNullableFloat(obj, "expertiseAchieved"),
-                DeserializeNullableInt(obj, "yearsPracticed")
+                DeserializeNullableInt(obj, "yearsPracticed"),
+                DeserializeNullableString(obj, "personHobbyId")
             );
         }
 
@@ -116,6 +117,7 @@ namespace MyHobbyPal.Client
 
             return (int?)_intSerializer.Deserialize(value.GetInt32());
         }
+
         private string DeserializeNullableString(JsonElement obj, string fieldName)
         {
             if (!obj.TryGetProperty(fieldName, out JsonElement value))

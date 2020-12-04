@@ -7,7 +7,7 @@ namespace MyHobbyPal.Api.Types
         public Hobby? Hobby { get; set; }
         public int? YearsPracticed { get; set; }
         public double? ExpertiseAchieved { get; set; }
-
+        public string? PersonHobbyId { get; set; }
         
     }
 }

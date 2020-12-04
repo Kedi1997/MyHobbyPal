@@ -13,5 +13,7 @@ namespace MyHobbyPal.Client
         double? ExpertiseAchieved { get; }
 
         int? YearsPracticed { get; }
+
+        string PersonHobbyId { get; }
     }
 }

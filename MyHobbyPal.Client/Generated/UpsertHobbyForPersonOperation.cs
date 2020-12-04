@@ -17,15 +17,15 @@ namespace MyHobbyPal.Client
 
         public Type ResultType => typeof(IUpsertHobbyForPerson);
 
-        public Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> AddHobbyForPerson { get; set; }
+        public Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> UpsertHobbyForPerson { get; set; }
 
         public IReadOnlyList<VariableValue> GetVariableValues()
         {
             var variables = new List<VariableValue>();
 
-            if (AddHobbyForPerson.HasValue)
+            if (UpsertHobbyForPerson.HasValue)
             {
-                variables.Add(new VariableValue("addHobbyForPerson", "UpsertHobbyForPersonInput", AddHobbyForPerson.Value));
+                variables.Add(new VariableValue("upsertHobbyForPerson", "UpsertHobbyForPersonInput", UpsertHobbyForPerson.Value));
             }
 
             return variables;

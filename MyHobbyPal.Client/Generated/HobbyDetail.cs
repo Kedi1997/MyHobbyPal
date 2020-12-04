@@ -12,11 +12,13 @@ namespace MyHobbyPal.Client
         public HobbyDetail(
             global::MyHobbyPal.Client.IHobby hobby, 
             double? expertiseAchieved, 
-            int? yearsPracticed)
+            int? yearsPracticed, 
+            string personHobbyId)
         {
             Hobby = hobby;
             ExpertiseAchieved = expertiseAchieved;
             YearsPracticed = yearsPracticed;
+            PersonHobbyId = personHobbyId;
         }
 
         public global::MyHobbyPal.Client.IHobby Hobby { get; }
@@ -24,5 +26,7 @@ namespace MyHobbyPal.Client
         public double? ExpertiseAchieved { get; }
 
         public int? YearsPracticed { get; }
+
+        public string PersonHobbyId { get; }
     }
 }

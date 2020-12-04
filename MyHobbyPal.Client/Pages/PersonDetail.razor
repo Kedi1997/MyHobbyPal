@@ -36,7 +36,7 @@ else
             {
             <tr>
                 <td>
-                    <a href="@($"edithobby/{h.Hobby.HobbyId}/{Person.PartitionKey}")" class="btn btn-primary">Edit Hobby</a>
+                    <a href="@($"edithobby/{Person.PersonId}/{Person.PartitionKey}/{h.Hobby.HobbyId}/{h.PersonHobbyId}/{h.Hobby.Name}/{h.Hobby.Difficulty}/{h.YearsPracticed}/{h.ExpertiseAchieved}")" class="btn btn-primary">Edit Hobby</a>
                     <i class="fas fa-info=circle"></i>
                 </td>
                 <td>@h.Hobby.Name</td>

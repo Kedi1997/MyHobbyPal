@@ -24,8 +24,8 @@ mutation UpsertPerson($person: UpsertPersonInput!){
   }
 }
 
-mutation upsertHobbyForPerson($addHobbyForPerson: UpsertHobbyForPersonInput!){
-  upsertHobbyForPerson(input:$addHobbyForPerson){
+mutation upsertHobbyForPerson($upsertHobbyForPerson: UpsertHobbyForPersonInput!){
+  upsertHobbyForPerson(input:$upsertHobbyForPerson){
     hobbyType{
      ...hobbyDetail
     }
@@ -49,4 +49,5 @@ fragment hobbyDetail on HobbyType{
   }
    expertiseAchieved
    yearsPracticed
+   personHobbyId
 }

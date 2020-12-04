@@ -53,6 +53,7 @@ type HobbyType {
   hobby: Hobby
   yearsPracticed: Int
   expertiseAchieved: Float
+  personHobbyId: String
 }
 
 type Hobby {

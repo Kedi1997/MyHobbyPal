@@ -104,16 +104,16 @@ namespace MyHobbyPal.Client
         }
 
         public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IUpsertHobbyForPerson>> UpsertHobbyForPersonAsync(
-            global::StrawberryShake.Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> addHobbyForPerson = default,
+            global::StrawberryShake.Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> upsertHobbyForPerson = default,
             global::System.Threading.CancellationToken cancellationToken = default)
         {
-            if (addHobbyForPerson.HasValue && addHobbyForPerson.Value is null)
+            if (upsertHobbyForPerson.HasValue && upsertHobbyForPerson.Value is null)
             {
-                throw new ArgumentNullException(nameof(addHobbyForPerson));
+                throw new ArgumentNullException(nameof(upsertHobbyForPerson));
             }
 
             return _executor.ExecuteAsync(
-                new UpsertHobbyForPersonOperation { AddHobbyForPerson = addHobbyForPerson },
+                new UpsertHobbyForPersonOperation { UpsertHobbyForPerson = upsertHobbyForPerson },
                 cancellationToken);
         }
 
