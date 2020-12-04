@@ -1,17 +1,15 @@
-﻿using MyHobbyPal.GraphData;
+﻿using MyHobbyPal.Api.Types;
+using MyHobbyPal.GraphData;
 
 namespace MyHobbyPal.Api.Mutations
 {
     public class AddHobbyForPersonPayload
     {
-        public Hobby Hobby { get; }
-        public PersonHobbyLink PersonHobbyLink { get; }
+       public HobbyType HobbyType { get; set; }
 
-        public AddHobbyForPersonPayload(Hobby hobby, PersonHobbyLink personHobbyLink)
+        public AddHobbyForPersonPayload(HobbyType hobbyType)
         {
-            Hobby = hobby;
-            PersonHobbyLink = personHobbyLink;
-
+            HobbyType = hobbyType;
         }
     }
 }

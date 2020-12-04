@@ -134,7 +134,7 @@ namespace MyHobbyPal.Api.Mutations
             };
 
             await repository.UpsertHobbyForPerson(input.PersonId, input.PartitionKey, hobby, personHobbyLink);
-            return new AddHobbyForPersonPayload(hobby, personHobbyLink);
+            return new AddHobbyForPersonPayload(new HobbyType { Hobby = hobby, YearsPracticed=input.YearsPracticed, ExpertiseAchieved = input.ExpertiseAchieved }) ;
         }
 
     }
