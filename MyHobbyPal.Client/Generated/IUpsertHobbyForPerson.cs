@@ -6,8 +6,8 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial interface IUpdatePerson
+    public partial interface IUpsertHobbyForPerson
     {
-        global::MyHobbyPal.Client.IPersonPayload1 UpdatePerson { get; }
+        global::MyHobbyPal.Client.IUpsertHobbyForPersonPayload UpsertHobbyForPerson { get; }
     }
 }

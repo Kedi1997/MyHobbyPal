@@ -23,11 +23,9 @@
     <PackageReference Include="HotChocolate" Version="11.0.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.0" />
     <PackageReference Include="HotChocolate.AspNetCore.GraphiQL" Version="10.5.5" />
-    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.98" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyHobbyPal.Client\MyHobbyPal.Client.csproj" />
     <ProjectReference Include="..\MyHobbyPal.GraphData\MyHobbyPal.GraphData.csproj" />
   </ItemGroup>
 	

@@ -6,14 +6,16 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial interface IHobby1
+    public partial interface IPersonDetail
     {
-        string HobbyId { get; }
+        string PersonId { get; }
 
         string PartitionKey { get; }
 
-        string Name { get; }
+        string FamilyName { get; }
 
-        double? Difficulty { get; }
+        string GivenName { get; }
+
+        IReadOnlyList<string> PhoneNumbers { get; }
     }
 }

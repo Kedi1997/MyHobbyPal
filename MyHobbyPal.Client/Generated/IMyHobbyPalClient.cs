@@ -26,28 +26,12 @@ namespace MyHobbyPal.Client
             GetPersonByIdOperation operation,
             CancellationToken cancellationToken = default);
 
-        Task<IOperationResult<global::MyHobbyPal.Client.IAddPerson>> AddPersonAsync(
-            Optional<global::MyHobbyPal.Client.AddPersonInput> addperson = default,
+        Task<IOperationResult<global::MyHobbyPal.Client.IUpsertHobbyForPerson>> UpsertHobbyForPersonAsync(
+            Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> addHobbyForPerson = default,
             CancellationToken cancellationToken = default);
 
-        Task<IOperationResult<global::MyHobbyPal.Client.IAddPerson>> AddPersonAsync(
-            AddPersonOperation operation,
-            CancellationToken cancellationToken = default);
-
-        Task<IOperationResult<global::MyHobbyPal.Client.IUpdatePerson>> UpdatePersonAsync(
-            Optional<global::MyHobbyPal.Client.UpdatePersonInput> person = default,
-            CancellationToken cancellationToken = default);
-
-        Task<IOperationResult<global::MyHobbyPal.Client.IUpdatePerson>> UpdatePersonAsync(
-            UpdatePersonOperation operation,
-            CancellationToken cancellationToken = default);
-
-        Task<IOperationResult<global::MyHobbyPal.Client.IAddHobbyForPerson>> AddHobbyForPersonAsync(
-            Optional<global::MyHobbyPal.Client.AddHobbyForPersonInput> addHobbyForPerson = default,
-            CancellationToken cancellationToken = default);
-
-        Task<IOperationResult<global::MyHobbyPal.Client.IAddHobbyForPerson>> AddHobbyForPersonAsync(
-            AddHobbyForPersonOperation operation,
+        Task<IOperationResult<global::MyHobbyPal.Client.IUpsertHobbyForPerson>> UpsertHobbyForPersonAsync(
+            UpsertHobbyForPersonOperation operation,
             CancellationToken cancellationToken = default);
     }
 }

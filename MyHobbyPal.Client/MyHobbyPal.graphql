@@ -9,13 +9,12 @@ type Query {
 }
 
 type Mutation {
-  updatePerson(input: UpdatePersonInput!): PersonPayload!
-  addPerson(input: AddPersonInput!): PersonPayload!
-  upsertHobbyForPerson(input: AddHobbyForPersonInput!): AddHobbyForPersonPayload!
+  upsertPerson(input: UpsertPersonInput!): PersonPayload!
+  upsertHobbyForPerson(input: UpsertHobbyForPersonInput!): UpsertHobbyForPersonPayload!
 }
 
 type PersonPayload {
-  person: Person!
+  personType: PersonType!
 }
 
 type PersonType {
@@ -27,26 +26,19 @@ type PersonType {
   hobbies: [HobbyType!]
 }
 
-type AddHobbyForPersonPayload {
-  hobby: Hobby!
-  personHobbyLink: PersonHobbyLink!
+type UpsertHobbyForPersonPayload {
+  hobbyType: HobbyType!
 }
 
-input UpdatePersonInput {
-  personId: String!
-  partitionKey: String!
+input UpsertPersonInput {
+  personId: String
+  partitionKey: String
   givenName: String
   familyName: String
-  phoneNumbers: [String!]!
+  phoneNumbers: [String!]
 }
 
-input AddPersonInput {
-  givenName: String!
-  familyName: String!
-  phoneNumbers: [String!]!
-}
-
-input AddHobbyForPersonInput {
+input UpsertHobbyForPersonInput {
   personId: String!
   partitionKey: String!
   hobbyName: String!
@@ -57,11 +49,10 @@ input AddHobbyForPersonInput {
   personHobbyId: String
 }
 
-type PersonHobbyLink {
-  personHobbyId: String
-  partitionKey: String
-  yearsPracticed: Int!
-  expertiseAchieved: Float!
+type HobbyType {
+  hobby: Hobby
+  yearsPracticed: Int
+  expertiseAchieved: Float
 }
 
 type Hobby {
@@ -69,20 +60,6 @@ type Hobby {
   partitionKey: String
   name: String
   difficulty: Float
-}
-
-type HobbyType {
-  hobby: Hobby
-  yearsPracticed: Int
-  expertiseAchieved: Float
-}
-
-type Person {
-  personId: String
-  partitionKey: String
-  givenName: String
-  familyName: String
-  phoneNumbers: [String]
 }
 
 "The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."

@@ -7,17 +7,8 @@ namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
     public partial interface IPersonType
+        : IPersonDetail
     {
-        string PersonId { get; }
-
-        string PartitionKey { get; }
-
-        string FamilyName { get; }
-
-        string GivenName { get; }
-
-        IReadOnlyList<string> PhoneNumbers { get; }
-
-        global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyType> Hobbies { get; }
+        global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> Hobbies { get; }
     }
 }

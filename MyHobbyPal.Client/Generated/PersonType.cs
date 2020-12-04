@@ -10,20 +10,22 @@ namespace MyHobbyPal.Client
         : IPersonType
     {
         public PersonType(
+            global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> hobbies, 
             string personId, 
             string partitionKey, 
             string familyName, 
             string givenName, 
-            IReadOnlyList<string> phoneNumbers, 
-            global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyType> hobbies)
+            IReadOnlyList<string> phoneNumbers)
         {
+            Hobbies = hobbies;
             PersonId = personId;
             PartitionKey = partitionKey;
             FamilyName = familyName;
             GivenName = givenName;
             PhoneNumbers = phoneNumbers;
-            Hobbies = hobbies;
         }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> Hobbies { get; }
 
         public string PersonId { get; }
 
@@ -34,7 +36,5 @@ namespace MyHobbyPal.Client
         public string GivenName { get; }
 
         public IReadOnlyList<string> PhoneNumbers { get; }
-
-        public global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyType> Hobbies { get; }
     }
 }

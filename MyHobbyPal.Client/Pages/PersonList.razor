@@ -45,6 +45,7 @@
 
     </tbody>
 </table>
+
 @code {
     private IList<IPersonType> persons = new List<IPersonType>();
 
@@ -54,10 +55,6 @@
         result.EnsureNoErrors();
 
         persons = result.Data!.Persons.ToList<IPersonType>();
-        //foreach(var p in persons)
-        //{
-        //    var phoneNumbers = p.PhoneNumbers;
-        //}
         StateHasChanged();
     }
 

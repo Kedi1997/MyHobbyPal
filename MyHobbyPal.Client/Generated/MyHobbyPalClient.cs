@@ -77,60 +77,8 @@ namespace MyHobbyPal.Client
             return _executor.ExecuteAsync(operation, cancellationToken);
         }
 
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IAddPerson>> AddPersonAsync(
-            global::StrawberryShake.Optional<global::MyHobbyPal.Client.AddPersonInput> addperson = default,
-            global::System.Threading.CancellationToken cancellationToken = default)
-        {
-            if (addperson.HasValue && addperson.Value is null)
-            {
-                throw new ArgumentNullException(nameof(addperson));
-            }
-
-            return _executor.ExecuteAsync(
-                new AddPersonOperation { Addperson = addperson },
-                cancellationToken);
-        }
-
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IAddPerson>> AddPersonAsync(
-            AddPersonOperation operation,
-            global::System.Threading.CancellationToken cancellationToken = default)
-        {
-            if (operation is null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-
-            return _executor.ExecuteAsync(operation, cancellationToken);
-        }
-
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IUpdatePerson>> UpdatePersonAsync(
-            global::StrawberryShake.Optional<global::MyHobbyPal.Client.UpdatePersonInput> person = default,
-            global::System.Threading.CancellationToken cancellationToken = default)
-        {
-            if (person.HasValue && person.Value is null)
-            {
-                throw new ArgumentNullException(nameof(person));
-            }
-
-            return _executor.ExecuteAsync(
-                new UpdatePersonOperation { Person = person },
-                cancellationToken);
-        }
-
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IUpdatePerson>> UpdatePersonAsync(
-            UpdatePersonOperation operation,
-            global::System.Threading.CancellationToken cancellationToken = default)
-        {
-            if (operation is null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-
-            return _executor.ExecuteAsync(operation, cancellationToken);
-        }
-
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IAddHobbyForPerson>> AddHobbyForPersonAsync(
-            global::StrawberryShake.Optional<global::MyHobbyPal.Client.AddHobbyForPersonInput> addHobbyForPerson = default,
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IUpsertHobbyForPerson>> UpsertHobbyForPersonAsync(
+            global::StrawberryShake.Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> addHobbyForPerson = default,
             global::System.Threading.CancellationToken cancellationToken = default)
         {
             if (addHobbyForPerson.HasValue && addHobbyForPerson.Value is null)
@@ -139,12 +87,12 @@ namespace MyHobbyPal.Client
             }
 
             return _executor.ExecuteAsync(
-                new AddHobbyForPersonOperation { AddHobbyForPerson = addHobbyForPerson },
+                new UpsertHobbyForPersonOperation { AddHobbyForPerson = addHobbyForPerson },
                 cancellationToken);
         }
 
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IAddHobbyForPerson>> AddHobbyForPersonAsync(
-            AddHobbyForPersonOperation operation,
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IUpsertHobbyForPerson>> UpsertHobbyForPersonAsync(
+            UpsertHobbyForPersonOperation operation,
             global::System.Threading.CancellationToken cancellationToken = default)
         {
             if (operation is null)

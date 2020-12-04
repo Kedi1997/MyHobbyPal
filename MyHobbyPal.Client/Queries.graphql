@@ -1,78 +1,44 @@
 ﻿query getAllPersons{
   persons{
-    personId
-    partitionKey
-    familyName
-    givenName
-    phoneNumbers
+    ...personDetail
     hobbies{
-      hobby{
-        hobbyId
-        partitionKey
-        name
-        difficulty
-      }
-      yearsPracticed
-      expertiseAchieved
+      ...hobbyDetail
     }
   }
 }
 
 query getPersonById($personId: String! $partitionKey:String!){
     person(personId: $personId, partitionKey:$partitionKey ){
-        personId
-        partitionKey
-        familyName
-        givenName
-        phoneNumbers
+        ...personDetail
         hobbies{
-          hobby{
-            hobbyId
-            partitionKey
-            name
-            difficulty
-          }
-          yearsPracticed
-          expertiseAchieved
+          ...hobbyDetail
         }
     }
 }
 
-mutation addPerson($addperson: AddPersonInput!){
-  addPerson(input:$addperson){
-    person{
-      givenName
-      familyName
-      partitionKey
-      personId
-      phoneNumbers
-    }
-  }
-}
-
-mutation updatePerson($person: UpdatePersonInput!){
-  updatePerson(input:$person){
-    person{
-      partitionKey
-      personId
-      givenName
-      familyName
-      phoneNumbers
-    }
-  }
-}
-
-mutation addHobbyForPerson($addHobbyForPerson: AddHobbyForPersonInput!){
+mutation upsertHobbyForPerson($addHobbyForPerson: UpsertHobbyForPersonInput!){
   upsertHobbyForPerson(input:$addHobbyForPerson){
-    hobby{
+    hobbyType{
+     ...hobbyDetail
+    }
+  }
+}
+
+fragment personDetail on PersonType{
+    personId
+    partitionKey
+    familyName
+    givenName
+    phoneNumbers
+}
+
+fragment hobbyDetail on HobbyType{
+  hobby{
       hobbyId
       partitionKey
       name
       difficulty
-    }
-    personHobbyLink{
-      expertiseAchieved
-      yearsPracticed
-    }
   }
+  expertiseAchieved
+   yearsPracticed
 }

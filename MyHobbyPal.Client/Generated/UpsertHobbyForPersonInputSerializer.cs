@@ -6,17 +6,19 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial class UpdatePersonInputSerializer
+    public partial class UpsertHobbyForPersonInputSerializer
         : IInputSerializer
     {
         private bool _needsInitialization = true;
+        private IValueSerializer _floatSerializer;
         private IValueSerializer _stringSerializer;
+        private IValueSerializer _intSerializer;
 
-        public string Name { get; } = "UpdatePersonInput";
+        public string Name { get; } = "UpsertHobbyForPersonInput";
 
         public ValueKind Kind { get; } = ValueKind.InputObject;
 
-        public Type ClrType => typeof(UpdatePersonInput);
+        public Type ClrType => typeof(UpsertHobbyForPersonInput);
 
         public Type SerializationType => typeof(IReadOnlyDictionary<string, object>);
 
@@ -26,7 +28,9 @@ namespace MyHobbyPal.Client
             {
                 throw new ArgumentNullException(nameof(serializerResolver));
             }
+            _floatSerializer = serializerResolver.Get("Float");
             _stringSerializer = serializerResolver.Get("String");
+            _intSerializer = serializerResolver.Get("Int");
             _needsInitialization = false;
         }
 
@@ -43,17 +47,27 @@ namespace MyHobbyPal.Client
                 return null;
             }
 
-            var input = (UpdatePersonInput)value;
+            var input = (UpsertHobbyForPersonInput)value;
             var map = new Dictionary<string, object>();
 
-            if (input.FamilyName.HasValue)
+            if (input.Difficulty.HasValue)
             {
-                map.Add("familyName", SerializeNullableString(input.FamilyName.Value));
+                map.Add("difficulty", SerializeNullableFloat(input.Difficulty.Value));
             }
 
-            if (input.GivenName.HasValue)
+            if (input.ExpertiseAchieved.HasValue)
             {
-                map.Add("givenName", SerializeNullableString(input.GivenName.Value));
+                map.Add("expertiseAchieved", SerializeNullableFloat(input.ExpertiseAchieved.Value));
+            }
+
+            if (input.HobbyId.HasValue)
+            {
+                map.Add("hobbyId", SerializeNullableString(input.HobbyId.Value));
+            }
+
+            if (input.HobbyName.HasValue)
+            {
+                map.Add("hobbyName", SerializeNullableString(input.HobbyName.Value));
             }
 
             if (input.PartitionKey.HasValue)
@@ -61,19 +75,28 @@ namespace MyHobbyPal.Client
                 map.Add("partitionKey", SerializeNullableString(input.PartitionKey.Value));
             }
 
+            if (input.PersonHobbyId.HasValue)
+            {
+                map.Add("personHobbyId", SerializeNullableString(input.PersonHobbyId.Value));
+            }
+
             if (input.PersonId.HasValue)
             {
                 map.Add("personId", SerializeNullableString(input.PersonId.Value));
             }
 
-            if (input.PhoneNumbers.HasValue)
+            if (input.YearsPracticed.HasValue)
             {
-                map.Add("phoneNumbers", SerializeNullableListOfString(input.PhoneNumbers.Value));
+                map.Add("yearsPracticed", SerializeNullableInt(input.YearsPracticed.Value));
             }
 
             return map;
         }
 
+        private object SerializeNullableFloat(object value)
+        {
+            return _floatSerializer.Serialize(value);
+        }
         private object SerializeNullableString(object value)
         {
             if (value is null)
@@ -84,16 +107,9 @@ namespace MyHobbyPal.Client
 
             return _stringSerializer.Serialize(value);
         }
-
-        private object SerializeNullableListOfString(object value)
+        private object SerializeNullableInt(object value)
         {
-            IList source = (IList)value;
-            object[] result = new object[source.Count];
-            for(int i = 0; i < source.Count; i++)
-            {
-                result[i] = SerializeNullableString(source[i]);
-            }
-            return result;
+            return _intSerializer.Serialize(value);
         }
 
         public object Deserialize(object value)

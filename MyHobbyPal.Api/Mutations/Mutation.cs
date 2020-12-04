@@ -115,7 +115,7 @@ namespace MyHobbyPal.Api.Mutations
         //    return new HobbyPayload(hobby);
         //}
 
-        public async Task<AddHobbyForPersonPayload> UpsertHobbyForPerson(AddHobbyForPersonInput input)
+        public async Task<UpsertHobbyForPersonPayload> UpsertHobbyForPerson(UpsertHobbyForPersonInput input)
         {
             var hobby = new Hobby
             {
@@ -134,7 +134,7 @@ namespace MyHobbyPal.Api.Mutations
             };
 
             await repository.UpsertHobbyForPerson(input.PersonId, input.PartitionKey, hobby, personHobbyLink);
-            return new AddHobbyForPersonPayload(new HobbyType { Hobby = hobby, YearsPracticed=input.YearsPracticed, ExpertiseAchieved = input.ExpertiseAchieved }) ;
+            return new UpsertHobbyForPersonPayload(new HobbyType { Hobby = hobby, YearsPracticed=input.YearsPracticed, ExpertiseAchieved = input.ExpertiseAchieved }) ;
         }
 
     }

@@ -6,7 +6,7 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial class AddHobbyForPersonInput
+    public partial class UpsertHobbyForPersonInput
     {
         public Optional<double> Difficulty { get; set; }
 
