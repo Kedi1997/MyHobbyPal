@@ -26,6 +26,14 @@ namespace MyHobbyPal.Client
             GetPersonByIdOperation operation,
             CancellationToken cancellationToken = default);
 
+        Task<IOperationResult<global::MyHobbyPal.Client.IUpsertPerson>> UpsertPersonAsync(
+            Optional<global::MyHobbyPal.Client.UpsertPersonInput> person = default,
+            CancellationToken cancellationToken = default);
+
+        Task<IOperationResult<global::MyHobbyPal.Client.IUpsertPerson>> UpsertPersonAsync(
+            UpsertPersonOperation operation,
+            CancellationToken cancellationToken = default);
+
         Task<IOperationResult<global::MyHobbyPal.Client.IUpsertHobbyForPerson>> UpsertHobbyForPersonAsync(
             Optional<global::MyHobbyPal.Client.UpsertHobbyForPersonInput> addHobbyForPerson = default,
             CancellationToken cancellationToken = default);

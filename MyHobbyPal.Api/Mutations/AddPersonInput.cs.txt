@@ -9,7 +9,7 @@ namespace MyHobbyPal.Api.Mutations
     {
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public string[] PhoneNumbers { get; set; } = new string[] { };
+        public string[] PhoneNumbers { get; set; } = Array.Empty<string>();
 
         public AddPersonInput(string givenName, string familyName, string[] phoneNumbers)
         {

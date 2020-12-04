@@ -1,6 +1,82 @@
 ﻿@page "/addperson"
+@page "/addperson/{personId}/{partitionKey}"
+@inject IMyHobbyPalClient MyHobbyPalClient
+@using System.ComponentModel.DataAnnotations;
+
 <h3>AddPerson</h3>
 
+@if (!Saved)
+{
+
+    <EditForm Model="@Input" OnSubmit="Submit">
+        <DataAnnotationsValidator/>
+        <div class="form-group row">
+            <label for="givenName" class="col-sm-3">Given Name:</label>
+            <InputText id="givenName" class="form-control col-sm-8" @bind-Value="Input.GivenName" placeholder="Enter Given Name"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.GivenName)"/>  
+        </div>
+        <div class="form-group row">
+            <label for="familyName" class="col-sm-3">Family Name:</label>
+            <InputText id="familyName" class="form-control col-sm-8" @bind-Value="Input.FamilyName" placeholder="Enter Family Name"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.FamilyName)" />
+        </div>
+        <div class="form-group row">
+            <label for="phoneNumbers" class="col-sm-3">Phone Numbers:</label>
+            <InputText id="phoneNumbers" class="form-control col-sm-8" @bind-Value="Input.PhoneNumbers" placeholder="Enter Phone Numbers, split by ,"></InputText>
+        </div>
+
+        <button type="submit">Submit</button>
+    </EditForm>
+
+}
+else
+{
+    <h5>@Message</h5>
+}
+
 @code {
+
+        public PersonInput Input { get; set; } = new PersonInput();
+
+        [Parameter]
+        public string personId { get; set; }
+
+        [Parameter]
+        public string partitionKey { get; set; }
+
+        protected bool Saved;
+        protected string Message;
+
+        protected override Task OnInitializedAsync()
+        {
+            Saved = false;
+            return base.OnInitializedAsync();
+        }
+
+        protected async Task Submit()
+        {
+
+            var UpsertPersonInput = new UpsertPersonInput
+            {
+                FamilyName = Input.FamilyName,
+                GivenName = Input.GivenName,
+                PhoneNumbers = Input.PhoneNumbers.Split(",")
+        };
+
+        await MyHobbyPalClient.UpsertPersonAsync(UpsertPersonInput);
+        Saved = true;
+        Message = "Successfully added!";
+    }
+
+    public class PersonInput
+    {
+        public string PersonId { get; set; }
+        public string PartitionKey { get; set; }
+        [Required]
+        public string GivenName { get; set; }
+        [Required]
+        public string FamilyName { get; set; }
+        public string PhoneNumbers { get; set; }
+    }
 
 }

@@ -17,7 +17,7 @@ namespace MyHobbyPal.GraphData
         private readonly string cosmosPartitionKeyPath;
         private readonly string environmentName;
         private ICosmosClientGraph cosmosClientGraph;
-        private readonly string gremlinElementMapCommand = "map(valueMap(true).unfold().group().by(keys).by(select(values).limit(local,1)))";
+        //private readonly string gremlinElementMapCommand = "map(valueMap(true).unfold().group().by(keys).by(select(values).limit(local,1)))";
         #endregion
 
         #region Constructor
@@ -36,7 +36,7 @@ namespace MyHobbyPal.GraphData
         public async Task<ICosmosClientGraph> GetCosmosClientGraph(string environmentName)
         {
             var createOptions = new CreateOptions(cosmosDatabaseId, cosmosContainerId, partitionKeyPath: cosmosPartitionKeyPath);
-            cosmosClientGraph = cosmosClientGraph ?? await EdSmartCosmosClientGraph.GetClientWithSql(cosmosAccountName, cosmosKey, cosmosDatabaseId, cosmosContainerId, environmentName != Constant.EnvironmentName.LocalDevelopment, createOptions);
+            cosmosClientGraph ??= await EdSmartCosmosClientGraph.GetClientWithSql(cosmosAccountName, cosmosKey, cosmosDatabaseId, cosmosContainerId, environmentName != Constant.EnvironmentName.LocalDevelopment, createOptions);
             return cosmosClientGraph;
         }
         #endregion
@@ -202,9 +202,9 @@ namespace MyHobbyPal.GraphData
                 var queryResult = await graph.UpsertVertex<Person>(person);
                 if (!queryResult.IsSuccessful) throw queryResult.Error;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var baseEx = ex.GetBaseException();
+                //var baseEx = ex.GetBaseException();
                 throw;
             }
         }

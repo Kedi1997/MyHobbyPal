@@ -16,6 +16,14 @@ query getPersonById($personId: String! $partitionKey:String!){
     }
 }
 
+mutation UpsertPerson($person: UpsertPersonInput!){
+  upsertPerson(input:$person){
+    personType{
+      ...personDetail
+    }
+  }
+}
+
 mutation upsertHobbyForPerson($addHobbyForPerson: UpsertHobbyForPersonInput!){
   upsertHobbyForPerson(input:$addHobbyForPerson){
     hobbyType{
