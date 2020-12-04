@@ -9,11 +9,11 @@
 {
 
     <EditForm Model="@Input" OnSubmit="Submit">
-        <DataAnnotationsValidator/>
+        <DataAnnotationsValidator />
         <div class="form-group row">
             <label for="givenName" class="col-sm-3">Given Name:</label>
             <InputText id="givenName" class="form-control col-sm-8" @bind-Value="Input.GivenName" placeholder="Enter Given Name"></InputText>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.GivenName)"/>  
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.GivenName)" />
         </div>
         <div class="form-group row">
             <label for="familyName" class="col-sm-3">Family Name:</label>
@@ -32,35 +32,41 @@
 else
 {
     <h5>@Message</h5>
+
+    <a href="@($"persondetail/{PersonId}/{PartitionKey}")" class="btn btn-primary">Go to Detail</a>
 }
 
 @code {
 
-        public PersonInput Input { get; set; } = new PersonInput();
+    public PersonInput Input { get; set; } = new PersonInput();
 
-        [Parameter]
-        public string personId { get; set; }
+    [Parameter]
+    public string PersonId { get; set; }
 
-        [Parameter]
-        public string partitionKey { get; set; }
+    [Parameter]
+    public string PartitionKey { get; set; }
 
-        protected bool Saved;
-        protected string Message;
+    protected bool Saved;
+    protected string Message;
 
-        protected override Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
+    {
+        Saved = false;
+        return base.OnInitializedAsync();
+    }
+
+    protected async Task Submit()
+    {
+        PersonId = string.IsNullOrEmpty(PersonId) ? Guid.NewGuid().ToString("D") : PersonId;
+        PartitionKey = string.IsNullOrEmpty(PartitionKey) ? Guid.NewGuid().ToString("D") : PartitionKey;
+
+        var UpsertPersonInput = new UpsertPersonInput
         {
-            Saved = false;
-            return base.OnInitializedAsync();
-        }
-
-        protected async Task Submit()
-        {
-
-            var UpsertPersonInput = new UpsertPersonInput
-            {
-                FamilyName = Input.FamilyName,
-                GivenName = Input.GivenName,
-                PhoneNumbers = Input.PhoneNumbers.Split(",")
+            PersonId = PersonId,
+            PartitionKey =PartitionKey,
+            FamilyName = Input.FamilyName,
+            GivenName = Input.GivenName,
+            PhoneNumbers = Input.PhoneNumbers.Split(",")
         };
 
         await MyHobbyPalClient.UpsertPersonAsync(UpsertPersonInput);
@@ -70,8 +76,6 @@ else
 
     public class PersonInput
     {
-        public string PersonId { get; set; }
-        public string PartitionKey { get; set; }
         [Required]
         public string GivenName { get; set; }
         [Required]
