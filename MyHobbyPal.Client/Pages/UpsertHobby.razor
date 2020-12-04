@@ -1,4 +1,4 @@
-﻿@page "/edithobby/{personId}/{partitionKey}"
+﻿@page "/edithobby/{personHobbyId}/{partitionKey}"
 @page "/addhobby/{personId}/{partitionKey}"
 @inject IMyHobbyPalClient MyHobbyPalClient
 @using System.ComponentModel.DataAnnotations;
@@ -50,27 +50,20 @@ else
     [Parameter]
     public string PartitionKey { get; set; }
 
+    [Parameter]
+    public string PersonHobbyId { get; set; }
+
     protected bool Saved;
     protected string Message;
 
     protected override async Task OnInitializedAsync()
     {
         Saved = false;
-        var result = await MyHobbyPalClient.GetPersonByIdAsync(PersonId, PartitionKey);
-        var person = result.Data!.Person.ToList<IPersonType1>().FirstOrDefault();
-        //if (person != null)
-        //{
-        //    Input.Name = person.Hobbies,;
-        //    Input.GivenName = person.GivenName;
-        //    Input.PhoneNumbers = string.Join(",", person.PhoneNumbers);
-        //}
-
+        await base.OnInitializedAsync();
     }
 
     protected async Task Submit()
     {
-        //PersonId = string.IsNullOrEmpty(PersonId) ? Guid.NewGuid().ToString("D") : PersonId;
-        //PartitionKey = string.IsNullOrEmpty(PartitionKey) ? Guid.NewGuid().ToString("D") : PartitionKey;
 
         var upsertHobbyForPersonInput = new UpsertHobbyForPersonInput
         {
@@ -79,7 +72,7 @@ else
             HobbyName = Input.Name,
             Difficulty = Input.Difficulity,
             YearsPracticed = Input.YearsPracticed,
-            ExpertiseAchieved = Input.ExpertiseAchieved
+            ExpertiseAchieved = Input.ExpertiseAchieved,
         };
 
         await MyHobbyPalClient.UpsertHobbyForPersonAsync(upsertHobbyForPersonInput);

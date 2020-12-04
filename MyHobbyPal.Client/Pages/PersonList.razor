@@ -21,21 +21,21 @@
         {
             @foreach (var person in persons)
             {
-        <tr>
-            <td>
-                <a href="@($"persondetail/{person.PersonId}/{person.PartitionKey}")" class="btn btn-primary">Detail</a>
-                <i class="fas fa-info=circle"></i>
-            </td>
-            <td>@person.PersonId</td>
-            <td>@person.PartitionKey</td>
-            <td>@person.GivenName</td>
-            <td>@person.FamilyName</td>
-            @foreach (var n in person.PhoneNumbers)
-            {
-                <td>@n.ToString()</td>
-            }
+                <tr>
+                    <td>
+                        <a href="@($"persondetail/{person.PersonId}/{person.PartitionKey}")" class="btn btn-primary">Detail</a>
+                        <i class="fas fa-info=circle"></i>
+                    </td>
+                    <td>@person.PersonId</td>
+                    <td>@person.PartitionKey</td>
+                    <td>@person.GivenName</td>
+                    <td>@person.FamilyName</td>
+                    @foreach (var n in person.PhoneNumbers)
+                    {
+                        <td>@n.ToString()</td>
+                    }
 
-        </tr>
+                </tr>
             }
         }
         else

@@ -23,6 +23,7 @@ else
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>Hobby Name</th>
                 <th>Difficulty</th>
                 <th>Years Practiced</th>
@@ -33,12 +34,16 @@ else
         <tbody>
             @foreach (var h in Person.Hobbies)
             {
-                <tr>
-                    <td>@h.Hobby.Name</td>
-                    <td>@h.Hobby.Difficulty</td>
-                    <td>@h.YearsPracticed</td>
-                    <td>@h.ExpertiseAchieved</td>
-                </tr>
+            <tr>
+                <td>
+                    <a href="@($"edithobby/{h.Hobby.HobbyId}/{Person.PartitionKey}")" class="btn btn-primary">Edit Hobby</a>
+                    <i class="fas fa-info=circle"></i>
+                </td>
+                <td>@h.Hobby.Name</td>
+                <td>@h.Hobby.Difficulty</td>
+                <td>@h.YearsPracticed</td>
+                <td>@h.ExpertiseAchieved</td>
+            </tr>
 
             }
         </tbody>

@@ -47,6 +47,6 @@ fragment hobbyDetail on HobbyType{
       name
       difficulty
   }
-  expertiseAchieved
+   expertiseAchieved
    yearsPracticed
 }
