@@ -8,9 +8,9 @@ namespace MyHobbyPal.Client
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
     public partial class UpsertHobbyForPersonInput
     {
-        public Optional<double> Difficulty { get; set; }
+        public Optional<double?> Difficulty { get; set; }
 
-        public Optional<double> ExpertiseAchieved { get; set; }
+        public Optional<double?> ExpertiseAchieved { get; set; }
 
         public Optional<string> HobbyId { get; set; }
 
@@ -22,6 +22,6 @@ namespace MyHobbyPal.Client
 
         public Optional<string> PersonId { get; set; }
 
-        public Optional<int> YearsPracticed { get; set; }
+        public Optional<int?> YearsPracticed { get; set; }
     }
 }

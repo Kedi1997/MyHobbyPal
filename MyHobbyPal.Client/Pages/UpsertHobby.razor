@@ -1,0 +1,100 @@
+﻿@page "/edithobby/{personId}/{partitionKey}"
+@page "/addhobby/{personId}/{partitionKey}"
+@inject IMyHobbyPalClient MyHobbyPalClient
+@using System.ComponentModel.DataAnnotations;
+
+<h3>EditHobby</h3>
+
+
+@if (!Saved)
+{
+
+<EditForm Model="@Input" OnSubmit="Submit">
+    <DataAnnotationsValidator />
+    <div class="form-group row">
+        <label for="name" class="col-sm-3">Hobby Name:</label>
+        <InputText id="name" class="form-control col-sm-8" @bind-Value="Input.Name" placeholder="Enter Hobby Name"></InputText>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.Name)" />
+    </div>
+    <div class="form-group row">
+        <label for="difficulity" class="col-sm-3">Difficulity:</label>
+        <InputNumber id="difficulity" class="form-control col-sm-8" @bind-Value="Input.Difficulity" placeholder="Enter Difficulity"></InputNumber>
+    </div>
+    <div class="form-group row">
+        <label for="yearsPracticed" class="col-sm-3">Years Practiced:</label>
+        <InputNumber id="yearsPracticed" class="form-control col-sm-8" @bind-Value="Input.YearsPracticed" placeholder="Enter Years Practiced"></InputNumber>
+    </div>
+    <div class="form-group row">
+        <label for="expertiseAchieved" class="col-sm-3">Expertise Achieved:</label>
+        <InputNumber id="expertiseAchieved" class="form-control col-sm-8" @bind-Value="Input.ExpertiseAchieved" placeholder="Enter Expertise Achieved"></InputNumber>
+    </div>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+}
+else
+{
+    <h5>@Message</h5>
+
+    <a href="@($"persondetail/{PersonId}/{PartitionKey}")" class="btn btn-primary">Go to Detail</a>
+}
+
+@code {
+
+    public HobbyInput Input { get; set; } = new HobbyInput();
+
+    [Parameter]
+    public string PersonId { get; set; }
+
+    [Parameter]
+    public string PartitionKey { get; set; }
+
+    protected bool Saved;
+    protected string Message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Saved = false;
+        var result = await MyHobbyPalClient.GetPersonByIdAsync(PersonId, PartitionKey);
+        var person = result.Data!.Person.ToList<IPersonType1>().FirstOrDefault();
+        //if (person != null)
+        //{
+        //    Input.Name = person.Hobbies,;
+        //    Input.GivenName = person.GivenName;
+        //    Input.PhoneNumbers = string.Join(",", person.PhoneNumbers);
+        //}
+
+    }
+
+    protected async Task Submit()
+    {
+        //PersonId = string.IsNullOrEmpty(PersonId) ? Guid.NewGuid().ToString("D") : PersonId;
+        //PartitionKey = string.IsNullOrEmpty(PartitionKey) ? Guid.NewGuid().ToString("D") : PartitionKey;
+
+        var upsertHobbyForPersonInput = new UpsertHobbyForPersonInput
+        {
+            PersonId = PersonId,
+            PartitionKey = PartitionKey,
+            HobbyName = Input.Name,
+            Difficulty = Input.Difficulity,
+            YearsPracticed = Input.YearsPracticed,
+            ExpertiseAchieved = Input.ExpertiseAchieved
+        };
+
+        await MyHobbyPalClient.UpsertHobbyForPersonAsync(upsertHobbyForPersonInput);
+        Saved = true;
+        Message = "Successfully added!";
+    }
+
+
+    public class HobbyInput
+    {
+        [Required]
+        public string Name { get; set; }
+        public double Difficulity { get; set; }
+        public int YearsPracticed { get; set; }
+        public double ExpertiseAchieved { get; set; }
+    }
+
+}

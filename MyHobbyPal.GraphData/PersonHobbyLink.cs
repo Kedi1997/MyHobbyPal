@@ -12,7 +12,7 @@ namespace MyHobbyPal.GraphData
         public string PersonHobbyId{get;set;}
         [PartitionKey]
         public string PartitionKey { get; set; }
-        public int YearsPracticed { get; set; }
-        public double ExpertiseAchieved { get; set; }
+        public int? YearsPracticed { get; set; }
+        public double? ExpertiseAchieved { get; set; }
     }
 }

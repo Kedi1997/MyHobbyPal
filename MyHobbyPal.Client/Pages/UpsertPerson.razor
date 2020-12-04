@@ -68,7 +68,7 @@ else
         PersonId = string.IsNullOrEmpty(PersonId) ? Guid.NewGuid().ToString("D") : PersonId;
         PartitionKey = string.IsNullOrEmpty(PartitionKey) ? Guid.NewGuid().ToString("D") : PartitionKey;
 
-        var UpsertPersonInput = new UpsertPersonInput
+        var upsertPersonInput = new UpsertPersonInput
         {
             PersonId = PersonId,
             PartitionKey =PartitionKey,
@@ -77,7 +77,7 @@ else
             PhoneNumbers = Input.PhoneNumbers.Split(",")
         };
 
-        await MyHobbyPalClient.UpsertPersonAsync(UpsertPersonInput);
+        await MyHobbyPalClient.UpsertPersonAsync(upsertPersonInput);
         Saved = true;
         Message = "Successfully added!";
     }

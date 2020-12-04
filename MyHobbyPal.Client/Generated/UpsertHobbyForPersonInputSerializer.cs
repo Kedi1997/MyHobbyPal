@@ -95,6 +95,12 @@ namespace MyHobbyPal.Client
 
         private object SerializeNullableFloat(object value)
         {
+            if (value is null)
+            {
+                return null;
+            }
+
+
             return _floatSerializer.Serialize(value);
         }
         private object SerializeNullableString(object value)
@@ -109,6 +115,12 @@ namespace MyHobbyPal.Client
         }
         private object SerializeNullableInt(object value)
         {
+            if (value is null)
+            {
+                return null;
+            }
+
+
             return _intSerializer.Serialize(value);
         }
 

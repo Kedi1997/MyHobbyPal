@@ -42,9 +42,9 @@ input UpsertHobbyForPersonInput {
   personId: String!
   partitionKey: String!
   hobbyName: String!
-  difficulty: Float!
-  yearsPracticed: Int!
-  expertiseAchieved: Float!
+  difficulty: Float
+  yearsPracticed: Int
+  expertiseAchieved: Float
   hobbyId: String
   personHobbyId: String
 }
