@@ -4,17 +4,13 @@ schema {
 }
 
 type Query {
-  persons: [PersonType!]!
+  persons(first: Int after: String last: Int before: String): PersonTypeConnection
   person(personId: String partitionKey: String givenName: String familyName: String): [PersonType!]!
 }
 
 type Mutation {
   upsertPerson(input: UpsertPersonInput!): PersonPayload!
   upsertHobbyForPerson(input: UpsertHobbyForPersonInput!): UpsertHobbyForPersonPayload!
-}
-
-type PersonPayload {
-  personType: PersonType!
 }
 
 type PersonType {
@@ -26,8 +22,42 @@ type PersonType {
   hobbies: [HobbyType!]
 }
 
+"A connection to a list of items."
+type PersonTypeConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [PersonTypeEdge!]
+  "A flattened list of the nodes."
+  nodes: [PersonType!]
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+  "Indicates whether more edges exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more edges exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+}
+
+"An edge in a connection."
+type PersonTypeEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: PersonType!
+}
+
 type UpsertHobbyForPersonPayload {
   hobbyType: HobbyType!
+}
+
+type PersonPayload {
+  personType: PersonType!
 }
 
 input UpsertPersonInput {

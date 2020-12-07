@@ -11,6 +11,10 @@ namespace MyHobbyPal.Client
     public partial interface IMyHobbyPalClient
     {
         Task<IOperationResult<global::MyHobbyPal.Client.IGetAllPersons>> GetAllPersonsAsync(
+            Optional<int?> first = default,
+            Optional<string> after = default,
+            Optional<int?> last = default,
+            Optional<string> before = default,
             CancellationToken cancellationToken = default);
 
         Task<IOperationResult<global::MyHobbyPal.Client.IGetAllPersons>> GetAllPersonsAsync(

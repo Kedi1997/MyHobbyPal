@@ -21,11 +21,21 @@ namespace MyHobbyPal.Client
         }
 
         public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetAllPersons>> GetAllPersonsAsync(
+            global::StrawberryShake.Optional<int?> first = default,
+            global::StrawberryShake.Optional<string> after = default,
+            global::StrawberryShake.Optional<int?> last = default,
+            global::StrawberryShake.Optional<string> before = default,
             global::System.Threading.CancellationToken cancellationToken = default)
         {
 
             return _executor.ExecuteAsync(
-                new GetAllPersonsOperation(),
+                new GetAllPersonsOperation
+                {
+                    First = first, 
+                    After = after, 
+                    Last = last, 
+                    Before = before
+                },
                 cancellationToken);
         }
 

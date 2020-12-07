@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotChocolate.Types;
 using MyHobbyPal.Api.Types;
 using MyHobbyPal.GraphData;
 using System;
@@ -22,6 +23,7 @@ namespace MyHobbyPal.Api.Queries
         #endregion
 
         #region GetPersons
+        [UsePaging]
         public async Task<IList<PersonType>> GetPersons()
         {
             IList<PersonType> personTypes = new List<PersonType>();

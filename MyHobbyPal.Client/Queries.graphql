@@ -1,8 +1,16 @@
-﻿query getAllPersons{
-  persons{
-    ...personDetail
-    hobbies{
-      ...hobbyDetail
+﻿query getAllPersons($first:Int $after:String $last:Int $before:String){
+  persons(first:$first, after:$after, last:$last, before:$before){
+    nodes{
+        ...personDetail
+        hobbies{
+          ...hobbyDetail
+        }
+      }
+    pageInfo{
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
     }
   }
 }

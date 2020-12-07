@@ -6,7 +6,7 @@
 <h3>Person list</h3>
 
 <h4>Search Person:</h4>
-<EditForm Model="@Input" OnSubmit="Submit">
+<EditForm Model="@Input" OnSubmit="Search">
     <div class="form-group row">
         <label for="givenName" class="col-sm-3">Given Name:</label>
         <InputText id="givenName" class="form-control col-sm-8" @bind-Value="Input.GivenName" placeholder="Enter Given Name"></InputText>
@@ -16,9 +16,8 @@
         <InputText id="familyName" class="form-control col-sm-8" @bind-Value="Input.FamilyName" placeholder="Enter Family Name"></InputText>
     </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
-
 
 <table class="table">
     <thead>
@@ -61,6 +60,7 @@
     </tbody>
 </table>
 
+
 @code {
     public SearchInput Input { get; set; } = new SearchInput();
 
@@ -71,18 +71,25 @@
         var result = await MyHobbyPalClient.GetAllPersonsAsync();
         result.EnsureNoErrors();
 
-        persons = result.Data!.Persons.ToList<IPersonDetail>();
+        persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
         StateHasChanged();
     }
 
-    protected async Task Submit()
+    protected async Task Search()
     {
+        if(string.IsNullOrEmpty(Input.FamilyName)&& string.IsNullOrEmpty(Input.FamilyName))
+        {
+            await OnInitializedAsync();
+        }
+        else
+        {
+            var result = await MyHobbyPalClient.GetPersonByNameAsync(Input.GivenName, Input.FamilyName);
+            result.EnsureNoErrors();
 
-        var result = await MyHobbyPalClient.GetPersonByNameAsync(Input.GivenName, Input.FamilyName);
-        result.EnsureNoErrors();
+            persons = result.Data!.Person.ToList<IPersonDetail>();
+            StateHasChanged();
+        }
 
-        persons = result.Data!.Person.ToList<IPersonDetail>();
-        StateHasChanged();
     }
 
     public class SearchInput

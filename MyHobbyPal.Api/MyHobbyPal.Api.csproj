@@ -32,7 +32,7 @@
 	
 
   <ItemGroup>
-    <None Update="schema.graphql">
+    <None Update="schema.graphql.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

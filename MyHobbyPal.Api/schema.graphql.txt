@@ -3,7 +3,7 @@
 }
 
 type Query{
-  person(id: String!, ): Person!
+  person(id: String! ): Person!
   persons: [Person!]
 }
 

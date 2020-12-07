@@ -6,8 +6,14 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial interface IGetAllPersons
+    public partial interface IPageInfo
     {
-        global::MyHobbyPal.Client.IPersonTypeConnection Persons { get; }
+        bool HasNextPage { get; }
+
+        bool HasPreviousPage { get; }
+
+        string StartCursor { get; }
+
+        string EndCursor { get; }
     }
 }
