@@ -77,6 +77,42 @@ namespace MyHobbyPal.Client
             return _executor.ExecuteAsync(operation, cancellationToken);
         }
 
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonByName>> GetPersonByNameAsync(
+            global::StrawberryShake.Optional<string> givenName = default,
+            global::StrawberryShake.Optional<string> familyName = default,
+            global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            if (givenName.HasValue && givenName.Value is null)
+            {
+                throw new ArgumentNullException(nameof(givenName));
+            }
+
+            if (familyName.HasValue && familyName.Value is null)
+            {
+                throw new ArgumentNullException(nameof(familyName));
+            }
+
+            return _executor.ExecuteAsync(
+                new GetPersonByNameOperation
+                {
+                    GivenName = givenName, 
+                    FamilyName = familyName
+                },
+                cancellationToken);
+        }
+
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonByName>> GetPersonByNameAsync(
+            GetPersonByNameOperation operation,
+            global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            if (operation is null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            return _executor.ExecuteAsync(operation, cancellationToken);
+        }
+
         public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IUpsertPerson>> UpsertPersonAsync(
             global::StrawberryShake.Optional<global::MyHobbyPal.Client.UpsertPersonInput> person = default,
             global::System.Threading.CancellationToken cancellationToken = default)

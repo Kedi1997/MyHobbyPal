@@ -52,15 +52,17 @@ else
     protected override async Task OnInitializedAsync()
     {
         Saved = false;
-        var result = await MyHobbyPalClient.GetPersonByIdAsync(PersonId, PartitionKey);
-        var person = result.Data!.Person.ToList<IPersonType1>().FirstOrDefault();
-        if (person != null)
+        if(!string.IsNullOrEmpty(PersonId)&& !string.IsNullOrEmpty(PartitionKey))
         {
-            Input.FamilyName = person.FamilyName;
-            Input.GivenName = person.GivenName;
-            Input.PhoneNumbers = string.Join(",", person.PhoneNumbers);
+            var result = await MyHobbyPalClient.GetPersonByIdAsync(PersonId, PartitionKey);
+            var person = result.Data!.Person.ToList<IPersonType1>().FirstOrDefault();
+            if (person != null)
+            {
+                Input.FamilyName = person.FamilyName;
+                Input.GivenName = person.GivenName;
+                Input.PhoneNumbers = string.Join(",", person.PhoneNumbers);
+            }
         }
-
     }
 
     protected async Task Submit()
@@ -85,10 +87,10 @@ else
     public class PersonInput
     {
         [Required]
-        public string GivenName { get; set; }
+        public string GivenName { get; set; } = string.Empty;
         [Required]
-        public string FamilyName { get; set; }
-        public string PhoneNumbers { get; set; }
+        public string FamilyName { get; set; } = string.Empty;
+        public string PhoneNumbers { get; set; } = string.Empty;
     }
 
 }

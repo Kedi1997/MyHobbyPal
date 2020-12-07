@@ -16,6 +16,15 @@ query getPersonById($personId: String! $partitionKey:String!){
     }
 }
 
+query getPersonByName($givenName:String! $familyName:String!){
+  person(givenName:$givenName, familyName:$familyName){
+    ...personDetail
+    hobbies{
+      ...hobbyDetail
+    }
+  }
+}
+
 mutation UpsertPerson($person: UpsertPersonInput!){
   upsertPerson(input:$person){
     personType{

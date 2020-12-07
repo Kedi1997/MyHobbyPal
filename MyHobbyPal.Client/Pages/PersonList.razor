@@ -5,6 +5,21 @@
 
 <h3>Person list</h3>
 
+<h4>Search Person:</h4>
+<EditForm Model="@Input" OnSubmit="Submit">
+    <div class="form-group row">
+        <label for="givenName" class="col-sm-3">Given Name:</label>
+        <InputText id="givenName" class="form-control col-sm-8" @bind-Value="Input.GivenName" placeholder="Enter Given Name"></InputText>
+    </div>
+    <div class="form-group row">
+        <label for="familyName" class="col-sm-3">Family Name:</label>
+        <InputText id="familyName" class="form-control col-sm-8" @bind-Value="Input.FamilyName" placeholder="Enter Family Name"></InputText>
+    </div>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -47,15 +62,32 @@
 </table>
 
 @code {
-    private IList<IPersonType> persons = new List<IPersonType>();
+    public SearchInput Input { get; set; } = new SearchInput();
+
+    private IList<IPersonDetail> persons = new List<IPersonDetail>();
 
     protected override async Task OnInitializedAsync()
     {
         var result = await MyHobbyPalClient.GetAllPersonsAsync();
         result.EnsureNoErrors();
 
-        persons = result.Data!.Persons.ToList<IPersonType>();
+        persons = result.Data!.Persons.ToList<IPersonDetail>();
         StateHasChanged();
     }
 
+    protected async Task Submit()
+    {
+
+        var result = await MyHobbyPalClient.GetPersonByNameAsync(Input.GivenName, Input.FamilyName);
+        result.EnsureNoErrors();
+
+        persons = result.Data!.Person.ToList<IPersonDetail>();
+        StateHasChanged();
+    }
+
+    public class SearchInput
+    {
+        public string GivenName { get; set; } = string.Empty;
+        public string FamilyName { get; set; } = string.Empty;
+    }
 }
