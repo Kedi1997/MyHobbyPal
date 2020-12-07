@@ -29,6 +29,7 @@ namespace MyHobbyPal.Api
         public IConfiguration Configuration { get; }
         #endregion
 
+        #region ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGraphQLServer()
@@ -57,7 +58,9 @@ namespace MyHobbyPal.Api
                 throw;
             }
         }
+        #endregion
 
+        #region Configure
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -73,6 +76,7 @@ namespace MyHobbyPal.Api
             {
                 endpoints.MapGraphQL();
             });
-        }
+        } 
+        #endregion
     }
 }

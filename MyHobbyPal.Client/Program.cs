@@ -25,10 +25,6 @@ namespace MyHobbyPal.Client
                 });
             builder.Services.AddMyHobbyPalClient();
 
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001/graphql") });
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            //builder.Services.AddSingleton();
-
             await builder.Build().RunAsync();
         }
     }
