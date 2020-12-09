@@ -23,6 +23,7 @@
     <PackageReference Include="HotChocolate" Version="11.0.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.0" />
     <PackageReference Include="HotChocolate.AspNetCore.GraphiQL" Version="10.5.5" />
+    <PackageReference Include="HotChocolate.Data" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
