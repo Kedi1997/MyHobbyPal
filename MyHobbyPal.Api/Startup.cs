@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyHobbyPal.Api.Mutations;
 using MyHobbyPal.Api.Queries;
+using MyHobbyPal.Api.Types;
 using MyHobbyPal.GraphData;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -34,7 +35,9 @@ namespace MyHobbyPal.Api
         {
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
-                .AddMutationType<Mutation>();
+                .AddMutationType<Mutation>()
+                .AddFiltering()
+                .AddProjections();
 
             services.AddTransient(provider =>
             {

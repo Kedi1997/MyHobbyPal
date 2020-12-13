@@ -19,6 +19,16 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
+<h4>Paging:</h4>
+<EditForm Model="@Input" OnSubmit="OnInitializedAsync">
+
+    <button type="submit" class="btn btn-primary">Go</button>
+    <InputNumber id="count" @bind-Value="Count"></InputNumber>
+    <button @onclick="Previous" disabled="@PreviousDisabled"> ← </button>
+    <button @onclick="Next" disabled="@NextDisabled"> → </button>
+
+</EditForm>
+
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +41,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (persons.Count > 0)
+        @if (Persons.Count > 0)
         {
-            @foreach (var person in persons)
+            @foreach (var person in Persons)
             {
                 <tr>
                     <td>
@@ -61,23 +71,34 @@
 </table>
 
 
-@code {
-    public SearchInput Input { get; set; } = new SearchInput();
 
-    private IList<IPersonDetail> persons = new List<IPersonDetail>();
+@code {
+    protected SearchInput Input { get; set; } = new SearchInput();
+
+    private IList<IPersonDetail> Persons = new List<IPersonDetail>();
+
+    protected int Count { get; set; } = 5;
+    protected bool PreviousDisabled = true;
+    protected bool NextDisabled = false;
+
+    protected PageInfo PageInfo;
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await MyHobbyPalClient.GetAllPersonsAsync();
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(first:Count);
         result.EnsureNoErrors();
 
-        persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
+        Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
+        PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
+
+        NextDisabled = !PageInfo.HasNextPage;
+
         StateHasChanged();
     }
 
     protected async Task Search()
     {
-        if(string.IsNullOrEmpty(Input.FamilyName)&& string.IsNullOrEmpty(Input.FamilyName))
+        if (string.IsNullOrEmpty(Input.FamilyName) && string.IsNullOrEmpty(Input.GivenName))
         {
             await OnInitializedAsync();
         }
@@ -86,9 +107,36 @@
             var result = await MyHobbyPalClient.GetPersonByNameAsync(Input.GivenName, Input.FamilyName);
             result.EnsureNoErrors();
 
-            persons = result.Data!.Person.ToList<IPersonDetail>();
+            Persons = result.Data!.Person.ToList<IPersonDetail>();
             StateHasChanged();
         }
+
+    }
+
+    public async Task Previous()
+    {
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, before: PageInfo.StartCursor);
+        result.EnsureNoErrors();
+
+        Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
+        PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
+
+        PreviousDisabled = !PageInfo.HasPreviousPage;
+        NextDisabled = !PageInfo.HasNextPage;
+        StateHasChanged();
+    }
+
+    public async Task Next()
+    {
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, after: PageInfo.EndCursor);
+        result.EnsureNoErrors();
+
+        Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
+        PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
+
+        NextDisabled = !PageInfo.HasNextPage;
+        PreviousDisabled = !PageInfo.HasPreviousPage;
+        StateHasChanged();
 
     }
 
@@ -97,4 +145,5 @@
         public string GivenName { get; set; } = string.Empty;
         public string FamilyName { get; set; } = string.Empty;
     }
+
 }
