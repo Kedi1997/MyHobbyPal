@@ -6,10 +6,10 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial class PersonType
-        : IPersonType
+    public partial class PersonWithHobbies
+        : IPersonWithHobbies
     {
-        public PersonType(
+        public PersonWithHobbies(
             global::MyHobbyPal.Client.IPersonDetail person, 
             global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> hobbies)
         {

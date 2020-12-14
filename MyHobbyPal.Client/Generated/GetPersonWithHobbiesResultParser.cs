@@ -11,47 +11,47 @@ using StrawberryShake.Transport;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial class GetPersonHobbiesResultParser
-        : JsonResultParserBase<IGetPersonHobbies>
+    public partial class GetPersonWithHobbiesResultParser
+        : JsonResultParserBase<IGetPersonWithHobbies>
     {
+        private readonly IValueSerializer _stringSerializer;
         private readonly IValueSerializer _floatSerializer;
         private readonly IValueSerializer _intSerializer;
-        private readonly IValueSerializer _stringSerializer;
 
-        public GetPersonHobbiesResultParser(IValueSerializerCollection serializerResolver)
+        public GetPersonWithHobbiesResultParser(IValueSerializerCollection serializerResolver)
         {
             if (serializerResolver is null)
             {
                 throw new ArgumentNullException(nameof(serializerResolver));
             }
+            _stringSerializer = serializerResolver.Get("String");
             _floatSerializer = serializerResolver.Get("Float");
             _intSerializer = serializerResolver.Get("Int");
-            _stringSerializer = serializerResolver.Get("String");
         }
 
-        protected override IGetPersonHobbies ParserData(JsonElement data)
+        protected override IGetPersonWithHobbies ParserData(JsonElement data)
         {
-            return new GetPersonHobbies
+            return new GetPersonWithHobbies
             (
-                ParseGetPersonHobbiesPersonHobbies(data, "personHobbies")
+                ParseGetPersonWithHobbiesPersonWithHobbies(data, "personWithHobbies")
             );
 
         }
 
-        private global::MyHobbyPal.Client.IPersonType ParseGetPersonHobbiesPersonHobbies(
+        private global::MyHobbyPal.Client.IPersonWithHobbies ParseGetPersonWithHobbiesPersonWithHobbies(
             JsonElement parent,
             string field)
         {
             JsonElement obj = parent.GetProperty(field);
 
-            return new PersonType
+            return new PersonWithHobbies
             (
-                ParseGetPersonHobbiesPersonHobbiesPerson(obj, "person"),
-                ParseGetPersonHobbiesPersonHobbiesHobbies(obj, "hobbies")
+                ParseGetPersonWithHobbiesPersonWithHobbiesPerson(obj, "person"),
+                ParseGetPersonWithHobbiesPersonWithHobbiesHobbies(obj, "hobbies")
             );
         }
 
-        private global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> ParseGetPersonHobbiesPersonHobbiesHobbies(
+        private global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> ParseGetPersonWithHobbiesPersonWithHobbiesHobbies(
             JsonElement parent,
             string field)
         {
@@ -72,7 +72,10 @@ namespace MyHobbyPal.Client
                 JsonElement element = obj[objIndex];
                 list[objIndex] = new HobbyDetail
                 (
-                    ParseGetPersonHobbiesPersonHobbiesHobbiesHobby(element, "hobby"),
+                    DeserializeNullableString(element, "hobbyId"),
+                    DeserializeNullableString(element, "partitionKey"),
+                    DeserializeNullableString(element, "name"),
+                    DeserializeNullableFloat(element, "difficulty"),
                     DeserializeNullableFloat(element, "expertiseAchieved"),
                     DeserializeNullableInt(element, "yearsPracticed"),
                     DeserializeNullableString(element, "personHobbyId")
@@ -83,7 +86,7 @@ namespace MyHobbyPal.Client
             return list;
         }
 
-        private global::MyHobbyPal.Client.IPersonDetail ParseGetPersonHobbiesPersonHobbiesPerson(
+        private global::MyHobbyPal.Client.IPersonDetail ParseGetPersonWithHobbiesPersonWithHobbiesPerson(
             JsonElement parent,
             string field)
         {
@@ -107,27 +110,19 @@ namespace MyHobbyPal.Client
             );
         }
 
-        private global::MyHobbyPal.Client.IHobby ParseGetPersonHobbiesPersonHobbiesHobbiesHobby(
-            JsonElement parent,
-            string field)
+        private string DeserializeNullableString(JsonElement obj, string fieldName)
         {
-            if (!parent.TryGetProperty(field, out JsonElement obj))
+            if (!obj.TryGetProperty(fieldName, out JsonElement value))
             {
                 return null;
             }
 
-            if (obj.ValueKind == JsonValueKind.Null)
+            if (value.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
 
-            return new Hobby
-            (
-                DeserializeNullableString(obj, "hobbyId"),
-                DeserializeNullableString(obj, "partitionKey"),
-                DeserializeNullableString(obj, "name"),
-                DeserializeNullableFloat(obj, "difficulty")
-            );
+            return (string)_stringSerializer.Deserialize(value.GetString());
         }
 
         private double? DeserializeNullableFloat(JsonElement obj, string fieldName)
@@ -158,21 +153,6 @@ namespace MyHobbyPal.Client
             }
 
             return (int?)_intSerializer.Deserialize(value.GetInt32());
-        }
-
-        private string DeserializeNullableString(JsonElement obj, string fieldName)
-        {
-            if (!obj.TryGetProperty(fieldName, out JsonElement value))
-            {
-                return null;
-            }
-
-            if (value.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            return (string)_stringSerializer.Deserialize(value.GetString());
         }
         private IReadOnlyList<string> DeserializeNullableListOfNullableString(JsonElement obj, string fieldName)
         {

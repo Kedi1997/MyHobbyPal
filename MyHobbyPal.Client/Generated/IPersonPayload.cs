@@ -8,6 +8,6 @@ namespace MyHobbyPal.Client
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
     public partial interface IPersonPayload
     {
-        global::MyHobbyPal.Client.IPersonType1 PersonType { get; }
+        global::MyHobbyPal.Client.IPersonDetail Person { get; }
     }
 }

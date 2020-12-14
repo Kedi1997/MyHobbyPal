@@ -42,35 +42,15 @@ namespace MyHobbyPal.Client
 
             return new PersonPayload
             (
-                ParseUpsertPersonUpsertPersonPersonType(obj, "personType")
+                ParseUpsertPersonUpsertPersonPerson(obj, "person")
             );
         }
 
-        private global::MyHobbyPal.Client.IPersonType1 ParseUpsertPersonUpsertPersonPersonType(
+        private global::MyHobbyPal.Client.IPersonDetail ParseUpsertPersonUpsertPersonPerson(
             JsonElement parent,
             string field)
         {
             JsonElement obj = parent.GetProperty(field);
-
-            return new PersonType1
-            (
-                ParseUpsertPersonUpsertPersonPersonTypePerson(obj, "person")
-            );
-        }
-
-        private global::MyHobbyPal.Client.IPersonDetail ParseUpsertPersonUpsertPersonPersonTypePerson(
-            JsonElement parent,
-            string field)
-        {
-            if (!parent.TryGetProperty(field, out JsonElement obj))
-            {
-                return null;
-            }
-
-            if (obj.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
 
             return new PersonDetail
             (

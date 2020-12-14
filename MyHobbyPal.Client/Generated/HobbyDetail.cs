@@ -10,18 +10,30 @@ namespace MyHobbyPal.Client
         : IHobbyDetail
     {
         public HobbyDetail(
-            global::MyHobbyPal.Client.IHobby hobby, 
+            string hobbyId, 
+            string partitionKey, 
+            string name, 
+            double? difficulty, 
             double? expertiseAchieved, 
             int? yearsPracticed, 
             string personHobbyId)
         {
-            Hobby = hobby;
+            HobbyId = hobbyId;
+            PartitionKey = partitionKey;
+            Name = name;
+            Difficulty = difficulty;
             ExpertiseAchieved = expertiseAchieved;
             YearsPracticed = yearsPracticed;
             PersonHobbyId = personHobbyId;
         }
 
-        public global::MyHobbyPal.Client.IHobby Hobby { get; }
+        public string HobbyId { get; }
+
+        public string PartitionKey { get; }
+
+        public string Name { get; }
+
+        public double? Difficulty { get; }
 
         public double? ExpertiseAchieved { get; }
 

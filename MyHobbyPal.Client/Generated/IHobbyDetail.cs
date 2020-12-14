@@ -8,7 +8,13 @@ namespace MyHobbyPal.Client
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
     public partial interface IHobbyDetail
     {
-        global::MyHobbyPal.Client.IHobby Hobby { get; }
+        string HobbyId { get; }
+
+        string PartitionKey { get; }
+
+        string Name { get; }
+
+        double? Difficulty { get; }
 
         double? ExpertiseAchieved { get; }
 

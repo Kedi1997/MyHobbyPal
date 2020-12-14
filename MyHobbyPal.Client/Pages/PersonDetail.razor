@@ -36,11 +36,11 @@ else
             {
             <tr>
                 <td>
-                    <a href="@($"edithobby/{Person.PersonId}/{Person.PartitionKey}/{h.Hobby.HobbyId}/{h.PersonHobbyId}/{h.Hobby.Name}/{h.Hobby.Difficulty}/{h.YearsPracticed}/{h.ExpertiseAchieved}")" class="btn btn-primary">Edit Hobby</a>
+                    <a href="@($"edithobby/{Person.PersonId}/{Person.PartitionKey}/{h.HobbyId}/{h.PersonHobbyId}/{h.Name}/{h.Difficulty}/{h.YearsPracticed}/{h.ExpertiseAchieved}")" class="btn btn-primary">Edit Hobby</a>
                     <i class="fas fa-info=circle"></i>
                 </td>
-                <td>@h.Hobby.Name</td>
-                <td>@h.Hobby.Difficulty</td>
+                <td>@h.Name</td>
+                <td>@h.Difficulty</td>
                 <td>@h.YearsPracticed</td>
                 <td>@h.ExpertiseAchieved</td>
             </tr>
@@ -64,11 +64,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-
-        var result = await MyHobbyPalClient.GetPersonHobbiesAsync(PersonId, PartitionKey);
+        var result = await MyHobbyPalClient.GetPersonWithHobbiesAsync(PersonId, PartitionKey);
         result.EnsureNoErrors();
-        Person = result.Data!.PersonHobbies.Person;
-        Hobbies = result.Data!.PersonHobbies.Hobbies.ToList<IHobbyDetail>();
-
+        Person = result.Data!.PersonWithHobbies.Person;
+        Hobbies = result.Data!.PersonWithHobbies.Hobbies.ToList<IHobbyDetail>();
     }
 }

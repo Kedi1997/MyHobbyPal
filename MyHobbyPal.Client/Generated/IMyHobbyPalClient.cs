@@ -23,13 +23,13 @@ namespace MyHobbyPal.Client
             GetAllPersonsOperation operation,
             CancellationToken cancellationToken = default);
 
-        Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonHobbies>> GetPersonHobbiesAsync(
+        Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonWithHobbies>> GetPersonWithHobbiesAsync(
             Optional<string> personId = default,
             Optional<string> partitionKey = default,
             CancellationToken cancellationToken = default);
 
-        Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonHobbies>> GetPersonHobbiesAsync(
-            GetPersonHobbiesOperation operation,
+        Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonWithHobbies>> GetPersonWithHobbiesAsync(
+            GetPersonWithHobbiesOperation operation,
             CancellationToken cancellationToken = default);
 
         Task<IOperationResult<global::MyHobbyPal.Client.IUpsertPerson>> UpsertPersonAsync(

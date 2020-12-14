@@ -21,28 +21,28 @@ namespace MyHobbyPal.Client
         };
         private readonly byte[] _hash = new byte[]
         {
-            48,
-            119,
-            99,
-            53,
-            68,
-            71,
-            52,
-            72,
-            115,
+            113,
+            69,
+            49,
+            69,
+            74,
             117,
-            87,
-            114,
-            55,
-            82,
-            47,
-            122,
-            121,
-            50,
             100,
+            89,
+            68,
+            88,
+            50,
+            78,
+            102,
+            107,
+            75,
+            85,
+            72,
+            47,
+            111,
             97,
-            76,
-            119,
+            80,
+            103,
             61,
             61
         };
@@ -468,6 +468,10 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
+            87,
+            105,
+            116,
+            104,
             72,
             111,
             98,
@@ -528,6 +532,10 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
+            87,
+            105,
+            116,
+            104,
             72,
             111,
             98,
@@ -782,30 +790,6 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
-            84,
-            121,
-            112,
-            101,
-            32,
-            123,
-            32,
-            95,
-            95,
-            116,
-            121,
-            112,
-            101,
-            110,
-            97,
-            109,
-            101,
-            32,
-            112,
-            101,
-            114,
-            115,
-            111,
-            110,
             32,
             123,
             32,
@@ -836,8 +820,6 @@ namespace MyHobbyPal.Client
             97,
             105,
             108,
-            32,
-            125,
             32,
             125,
             32,
@@ -997,10 +979,6 @@ namespace MyHobbyPal.Client
             98,
             98,
             121,
-            84,
-            121,
-            112,
-            101,
             32,
             123,
             32,
@@ -1169,29 +1147,6 @@ namespace MyHobbyPal.Client
             98,
             98,
             121,
-            84,
-            121,
-            112,
-            101,
-            32,
-            123,
-            32,
-            95,
-            95,
-            116,
-            121,
-            112,
-            101,
-            110,
-            97,
-            109,
-            101,
-            32,
-            104,
-            111,
-            98,
-            98,
-            121,
             32,
             123,
             32,
@@ -1242,8 +1197,6 @@ namespace MyHobbyPal.Client
             108,
             116,
             121,
-            32,
-            125,
             32,
             101,
             120,
@@ -1318,8 +1271,8 @@ namespace MyHobbyPal.Client
               }
             }
             
-            query getPersonHobbies($personId: String!, $partitionKey: String!) {
-              personHobbies(personId: $personId, partitionKey: $partitionKey) {
+            query getPersonWithHobbies($personId: String!, $partitionKey: String!) {
+              personWithHobbies(personId: $personId, partitionKey: $partitionKey) {
                 person {
                   ... personDetail
                 }
@@ -1331,17 +1284,15 @@ namespace MyHobbyPal.Client
             
             mutation UpsertPerson($person: UpsertPersonInput!) {
               upsertPerson(input: $person) {
-                personType {
-                  person {
-                    ... personDetail
-                  }
+                person {
+                  ... personDetail
                 }
               }
             }
             
             mutation upsertHobbyForPerson($upsertHobbyForPerson: UpsertHobbyForPersonInput!) {
               upsertHobbyForPerson(input: $upsertHobbyForPerson) {
-                hobbyType {
+                hobby {
                   ... hobbyDetail
                 }
               }
@@ -1355,13 +1306,11 @@ namespace MyHobbyPal.Client
               phoneNumbers
             }
             
-            fragment hobbyDetail on HobbyType {
-              hobby {
-                hobbyId
-                partitionKey
-                name
-                difficulty
-              }
+            fragment hobbyDetail on Hobby {
+              hobbyId
+              partitionKey
+              name
+              difficulty
               expertiseAchieved
               yearsPracticed
               personHobbyId

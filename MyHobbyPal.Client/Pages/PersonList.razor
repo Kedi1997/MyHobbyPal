@@ -72,12 +72,9 @@
 </table>
 
 
-
 @code {
     protected SearchInput Input { get; set; } = new SearchInput();
-
     private IList<IPersonDetail> Persons = new List<IPersonDetail>();
-
     protected int Count { get; set; } = 5;
     protected bool PreviousDisabled = true;
     protected bool NextDisabled = false;
@@ -88,7 +85,6 @@
     {
         var result = await MyHobbyPalClient.GetAllPersonsAsync(first:Count, givenName: Input.GivenName, familyName: Input.FamilyName);
         result.EnsureNoErrors();
-
         UpdateData(result);
     }
 
@@ -102,17 +98,14 @@
         {
             var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, givenName:Input.GivenName, familyName:Input.FamilyName);
             result.EnsureNoErrors();
-
             UpdateData(result);
         }
-
     }
 
     public async Task Previous()
     {
         var result = await MyHobbyPalClient.GetAllPersonsAsync(last: Count, before: PageInfo.StartCursor, givenName: Input.GivenName, familyName: Input.FamilyName);
         result.EnsureNoErrors();
-
         UpdateData(result);
     }
 
@@ -120,16 +113,13 @@
     {
         var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, after: PageInfo.EndCursor, givenName: Input.GivenName, familyName: Input.FamilyName);
         result.EnsureNoErrors();
-
         UpdateData(result);
-
     }
 
     protected void UpdateData(IOperationResult<global::MyHobbyPal.Client.IGetAllPersons> result)
     {
         Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
         PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
-
         NextDisabled = !PageInfo.HasNextPage;
         PreviousDisabled = !PageInfo.HasPreviousPage;
         StateHasChanged();

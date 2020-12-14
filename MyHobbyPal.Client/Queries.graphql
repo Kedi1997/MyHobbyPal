@@ -12,8 +12,8 @@
   }
 }
 
-query getPersonHobbies($personId: String! $partitionKey:String!){
-    personHobbies(personId: $personId, partitionKey:$partitionKey ){
+query getPersonWithHobbies($personId: String! $partitionKey:String!){
+    personWithHobbies(personId: $personId, partitionKey:$partitionKey ){
         person{
           ...personDetail
         }
@@ -25,18 +25,17 @@ query getPersonHobbies($personId: String! $partitionKey:String!){
 
 mutation UpsertPerson($person: UpsertPersonInput!){
   upsertPerson(input:$person){
-    personType{
-        person{
-          ...personDetail
-        }
+    person{
+        ...personDetail
     }
   }
 }
 
 mutation upsertHobbyForPerson($upsertHobbyForPerson: UpsertHobbyForPersonInput!){
   upsertHobbyForPerson(input:$upsertHobbyForPerson){
-    hobbyType{
-     ...hobbyDetail
+
+    hobby{
+      ...hobbyDetail
     }
   }
 }
@@ -49,14 +48,12 @@ fragment personDetail on Person{
     phoneNumbers
 }
 
-fragment hobbyDetail on HobbyType{
-  hobby{
+fragment hobbyDetail on Hobby{
       hobbyId
       partitionKey
       name
       difficulty
-  }
-   expertiseAchieved
-   yearsPracticed
-   personHobbyId
+      expertiseAchieved
+      yearsPracticed
+      personHobbyId
 }

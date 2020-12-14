@@ -10,11 +10,11 @@ namespace MyHobbyPal.Client
         : IUpsertHobbyForPersonPayload
     {
         public UpsertHobbyForPersonPayload(
-            global::MyHobbyPal.Client.IHobbyDetail hobbyType)
+            global::MyHobbyPal.Client.IHobbyDetail hobby)
         {
-            HobbyType = hobbyType;
+            Hobby = hobby;
         }
 
-        public global::MyHobbyPal.Client.IHobbyDetail HobbyType { get; }
+        public global::MyHobbyPal.Client.IHobbyDetail Hobby { get; }
     }
 }

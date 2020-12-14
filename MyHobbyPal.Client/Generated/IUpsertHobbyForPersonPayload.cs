@@ -8,6 +8,6 @@ namespace MyHobbyPal.Client
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
     public partial interface IUpsertHobbyForPersonPayload
     {
-        global::MyHobbyPal.Client.IHobbyDetail HobbyType { get; }
+        global::MyHobbyPal.Client.IHobbyDetail Hobby { get; }
     }
 }

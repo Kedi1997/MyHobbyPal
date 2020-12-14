@@ -54,8 +54,8 @@ else
         Saved = false;
         if(!string.IsNullOrEmpty(PersonId)&& !string.IsNullOrEmpty(PartitionKey))
         {
-            var result = await MyHobbyPalClient.GetPersonHobbiesAsync(PersonId, PartitionKey);
-            var person = result.Data!.PersonHobbies.Person;
+            var result = await MyHobbyPalClient.GetPersonWithHobbiesAsync(PersonId, PartitionKey);
+            var person = result.Data!.PersonWithHobbies.Person;
             if (person != null)
             {
                 Input.FamilyName = person.FamilyName;

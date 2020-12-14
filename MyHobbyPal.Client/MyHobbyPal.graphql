@@ -5,7 +5,7 @@ schema {
 
 type Query {
   persons(first: Int after: String last: Int before: String where: PersonFilterInput): PersonConnection
-  personHobbies(personId: String partitionKey: String): PersonType!
+  personWithHobbies(personId: String partitionKey: String): PersonWithHobbies!
 }
 
 type Mutation {
@@ -84,16 +84,16 @@ type PersonEdge {
 }
 
 type PersonPayload {
-  personType: PersonType!
+  person: Person!
 }
 
-type PersonType {
+type PersonWithHobbies {
   person: Person
-  hobbies: [HobbyType!]
+  hobbies: [Hobby!]
 }
 
 type UpsertHobbyForPersonPayload {
-  hobbyType: HobbyType!
+  hobby: Hobby!
 }
 
 input UpsertPersonInput {
@@ -115,18 +115,14 @@ input UpsertHobbyForPersonInput {
   personHobbyId: String
 }
 
-type HobbyType {
-  hobby: Hobby
-  yearsPracticed: Int
-  expertiseAchieved: Float
-  personHobbyId: String
-}
-
 type Hobby {
   hobbyId: String
   partitionKey: String
   name: String
   difficulty: Float
+  yearsPracticed: Int
+  expertiseAchieved: Float
+  personHobbyId: String
 }
 
 "The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."
