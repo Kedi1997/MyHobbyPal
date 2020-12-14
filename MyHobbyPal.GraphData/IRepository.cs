@@ -9,7 +9,7 @@ namespace MyHobbyPal.GraphData
        // Task<IList<Person>> GetPersonByName(string givenName, string familyName);
         Task<IList<Person>> GetAllPerson();
         Task UpsertHobbyForPerson(string personId, string partitionKey, Hobby hobby, PersonHobbyLink personHobbyLink);
-        Task<IList<Hobby>> GetPersonHobbies(string personId, string partitionKey);
+        Task<IList<Hobby>> GetHobbiesForPerson(string personId, string partitionKey);
         Task<PersonHobbyLink> GetPersonHobbyLink(string partitionKey, string hobbyId);
         Task UpsertPerson(Person person);
     }

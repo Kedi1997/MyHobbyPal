@@ -9,9 +9,9 @@ namespace MyHobbyPal.Api.Mutations
 {
     public class PersonPayload
     {
-        public PersonType PersonType { get; }
+        public PersonWithHobbies PersonType { get; }
 
-        public PersonPayload(PersonType personType)
+        public PersonPayload(PersonWithHobbies personType)
         {
             PersonType = personType;
         }

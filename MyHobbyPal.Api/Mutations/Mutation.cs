@@ -38,7 +38,7 @@ namespace MyHobbyPal.Api.Mutations
                 PhoneNumbers = input.PhoneNumbers
             };
 
-            var personType = new PersonType
+            var personType = new PersonWithHobbies
             {
                 //PartitionKey = input.PartitionKey,
                 //PersonId = input.PersonId,
@@ -56,7 +56,7 @@ namespace MyHobbyPal.Api.Mutations
         #region UpsertHobbyForPerson
         public async Task<UpsertHobbyForPersonPayload> UpsertHobbyForPerson(UpsertHobbyForPersonInput input)
         {
-            var hobby = new Hobby
+            var hobby = new GraphData.Hobby
             {
                 HobbyId = string.IsNullOrEmpty(input.HobbyId) ? Guid.NewGuid().ToString("D") : input.HobbyId,
                 PartitionKey = input.PartitionKey,
@@ -73,7 +73,15 @@ namespace MyHobbyPal.Api.Mutations
             };
 
             await repository.UpsertHobbyForPerson(input.PersonId, input.PartitionKey, hobby, personHobbyLink);
-            return new UpsertHobbyForPersonPayload(new HobbyType { Hobby = hobby, YearsPracticed = input.YearsPracticed, ExpertiseAchieved = input.ExpertiseAchieved });
+            return new UpsertHobbyForPersonPayload(new Types.Hobby
+            {
+                HobbyId = hobby.HobbyId,
+                PartitionKey = hobby.PartitionKey,
+                Name = hobby.Name,
+                Difficulty = hobby.Difficulty,
+                YearsPracticed = input.YearsPracticed, 
+                ExpertiseAchieved = input.ExpertiseAchieved 
+            });
         } 
         #endregion
 

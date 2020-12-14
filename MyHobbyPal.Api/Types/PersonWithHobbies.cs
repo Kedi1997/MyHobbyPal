@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MyHobbyPal.Api.Types
 {
-    public class PersonType
+    public class PersonWithHobbies
     {
-        public PersonType()
+        public PersonWithHobbies()
         {
         }
 
-        public PersonType(Person person)
+        public PersonWithHobbies(Person person)
         {
             Person = person;
         }
@@ -23,7 +23,7 @@ namespace MyHobbyPal.Api.Types
         //public string? FamilyName { get; set; }
         //public string[]? PhoneNumbers { get; set; }
         public Person? Person { get; set; }
-        public IList<HobbyType>? Hobbies { get; set; } = new List<HobbyType>();
+        public IList<Hobby>? Hobbies { get; set; } = new List<Hobby>();
 
 
     }

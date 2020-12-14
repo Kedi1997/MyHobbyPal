@@ -5,9 +5,9 @@ namespace MyHobbyPal.Api.Mutations
 {
     public class UpsertHobbyForPersonPayload
     {
-       public HobbyType HobbyType { get; set; }
+       public Types.Hobby HobbyType { get; set; }
 
-        public UpsertHobbyForPersonPayload(HobbyType hobbyType)
+        public UpsertHobbyForPersonPayload(Types.Hobby hobbyType)
         {
             HobbyType = hobbyType;
         }

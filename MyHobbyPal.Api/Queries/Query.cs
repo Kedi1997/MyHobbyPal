@@ -49,38 +49,41 @@ namespace MyHobbyPal.Api.Queries
         //}
         //#endregion
 
-        #region GetPersonHobbies
-        public async Task<PersonType> GetPersonHobbies(string? personId, string? partitionKey)
+        #region GetPersonWithHobbies
+        public async Task<PersonWithHobbies> GetPersonWithHobbies(string? personId, string? partitionKey)
         {
-            PersonType personType = new PersonType();
+            PersonWithHobbies personWithHobbies = new PersonWithHobbies();
             if (!string.IsNullOrEmpty(personId) && !string.IsNullOrEmpty(partitionKey))
             {
                 var person = await repository.GetPersonById(personId, partitionKey);
-                personType = await GetPersonTypeExtensionsAsync(person);
+                personWithHobbies = await GetHobbiesForPerson(person);
             }
-            return personType;
+            return personWithHobbies;
         }
 
-            #endregion
+        #endregion
 
-            #region GetPersonTypeExtensionsAsync
-            private async Task<PersonType> GetPersonTypeExtensionsAsync(Person person)
+        #region GetHobbiesForPerson
+        private async Task<PersonWithHobbies> GetHobbiesForPerson(Person person)
         {
-            IList<HobbyType> hobbies = new List<HobbyType>();
+            IList<Types.Hobby> hobbies = new List<Types.Hobby>();
 
-            foreach (var hobby in await repository.GetPersonHobbies(person.PersonId, person.PartitionKey))
+            foreach (var hobby in await repository.GetHobbiesForPerson(person.PersonId, person.PartitionKey))
             {
                 var personHobbyLink = await repository.GetPersonHobbyLink(person.PartitionKey, hobby.HobbyId);
-                hobbies.Add(new HobbyType
+                hobbies.Add(new Types.Hobby
                 {
-                    Hobby = hobby,
+                    HobbyId = hobby.HobbyId,
+                    PartitionKey = hobby.PartitionKey,
+                    Name = hobby.Name,
+                    Difficulty = hobby.Difficulty,
                     YearsPracticed = personHobbyLink.YearsPracticed,
                     ExpertiseAchieved = personHobbyLink.ExpertiseAchieved,
                     PersonHobbyId = personHobbyLink.PersonHobbyId
                 });
             }
 
-            return new PersonType
+            return new PersonWithHobbies
             {
                 Person = person,
                 Hobbies = hobbies

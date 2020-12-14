@@ -91,7 +91,7 @@ namespace MyHobbyPal.GraphData
             if (!upsertPersonHobbyLinkQuery.IsSuccessful) throw upsertPersonHobbyLinkQuery.Error;
         }
 
-        public async Task<IList<Hobby>> GetPersonHobbies(string personId, string partitionKey)
+        public async Task<IList<Hobby>> GetHobbiesForPerson(string personId, string partitionKey)
         {
             var graph = await GetCosmosClientGraph(environmentName);
             var queryResult = await graph.ExecuteGremlin<Hobby>($"g.V().has('id','{personId}').outE().inV()");
