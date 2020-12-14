@@ -1,7 +1,5 @@
 ﻿@page "/addperson"
 @page "/editperson/{personId}/{partitionKey}"
-@inject IMyHobbyPalClient MyHobbyPalClient
-@using System.ComponentModel.DataAnnotations;
 
 <h3>AddPerson</h3>
 
@@ -38,6 +36,7 @@ else
 
 @code {
 
+    #region Member Variables
     public PersonInput Input { get; set; } = new PersonInput();
 
     [Parameter]
@@ -48,11 +47,13 @@ else
 
     protected bool Saved;
     protected string Message;
+    #endregion
 
+    #region OnInitializedAsync
     protected override async Task OnInitializedAsync()
     {
         Saved = false;
-        if(!string.IsNullOrEmpty(PersonId)&& !string.IsNullOrEmpty(PartitionKey))
+        if (!string.IsNullOrEmpty(PersonId) && !string.IsNullOrEmpty(PartitionKey))
         {
             var result = await MyHobbyPalClient.GetPersonWithHobbiesAsync(PersonId, PartitionKey);
             var person = result.Data!.PersonWithHobbies.Person;
@@ -64,7 +65,9 @@ else
             }
         }
     }
+    #endregion
 
+    #region Submit
     protected async Task Submit()
     {
         PersonId = string.IsNullOrEmpty(PersonId) ? Guid.NewGuid().ToString("D") : PersonId;
@@ -73,7 +76,7 @@ else
         var upsertPersonInput = new UpsertPersonInput
         {
             PersonId = PersonId,
-            PartitionKey =PartitionKey,
+            PartitionKey = PartitionKey,
             FamilyName = Input.FamilyName,
             GivenName = Input.GivenName,
             PhoneNumbers = Input.PhoneNumbers.Split(",")
@@ -83,7 +86,9 @@ else
         Saved = true;
         Message = "Successfully added!";
     }
+    #endregion
 
+    #region PersonInput
     public class PersonInput
     {
         [Required]
@@ -92,5 +97,6 @@ else
         public string FamilyName { get; set; } = string.Empty;
         public string PhoneNumbers { get; set; } = string.Empty;
     }
+    #endregion
 
 }

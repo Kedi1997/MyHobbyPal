@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace MyHobbyPal.GraphData
 {
-    [Label(Value =nameof(Constant.VertexLabel.Person))]
+    #region Person
+    [Label(Value = nameof(Constant.VertexLabel.Person))]
     public class Person
     {
-        #region Person
         [Id]
         public string PersonId { get; set; }
         [PartitionKey]
@@ -14,7 +14,6 @@ namespace MyHobbyPal.GraphData
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
         public string[] PhoneNumbers { get; set; } = new string[] { };
-        #endregion
-
-    }
+    } 
+    #endregion
 }

@@ -1,36 +1,33 @@
 ﻿@page "/edithobby/{personId}/{partitionKey}/{hobbyId}/{personHobbyId}/{hobbyName}/{difficulty:double}/{yearsPracticed:int}/{expertiseAchieved:double}"
 @page "/addhobby/{personId}/{partitionKey}"
-@inject IMyHobbyPalClient MyHobbyPalClient
-@using System.ComponentModel.DataAnnotations;
 
 <h3>EditHobby</h3>
-
 
 @if (!Saved)
 {
 
-<EditForm Model="@Input" OnSubmit="Submit">
-    <DataAnnotationsValidator />
-    <div class="form-group row">
-        <label for="name" class="col-sm-3">Hobby Name:</label>
-        <InputText id="name" class="form-control col-sm-8" @bind-Value="Input.Name" placeholder="Enter Hobby Name"></InputText>
-        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.Name)" />
-    </div>
-    <div class="form-group row">
-        <label for="difficulity" class="col-sm-3">Difficulity:</label>
-        <InputNumber id="difficulity" class="form-control col-sm-8" @bind-Value="Input.Difficulty" placeholder="Enter Difficulity"></InputNumber>
-    </div>
-    <div class="form-group row">
-        <label for="yearsPracticed" class="col-sm-3">Years Practiced:</label>
-        <InputNumber id="yearsPracticed" class="form-control col-sm-8" @bind-Value="Input.YearsPracticed" placeholder="Enter Years Practiced"></InputNumber>
-    </div>
-    <div class="form-group row">
-        <label for="expertiseAchieved" class="col-sm-3">Expertise Achieved:</label>
-        <InputNumber id="expertiseAchieved" class="form-control col-sm-8" @bind-Value="Input.ExpertiseAchieved" placeholder="Enter Expertise Achieved"></InputNumber>
-    </div>
+    <EditForm Model="@Input" OnSubmit="Submit">
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="name" class="col-sm-3">Hobby Name:</label>
+            <InputText id="name" class="form-control col-sm-8" @bind-Value="Input.Name" placeholder="Enter Hobby Name"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(()=>Input.Name)" />
+        </div>
+        <div class="form-group row">
+            <label for="difficulity" class="col-sm-3">Difficulity:</label>
+            <InputNumber id="difficulity" class="form-control col-sm-8" @bind-Value="Input.Difficulty" placeholder="Enter Difficulity"></InputNumber>
+        </div>
+        <div class="form-group row">
+            <label for="yearsPracticed" class="col-sm-3">Years Practiced:</label>
+            <InputNumber id="yearsPracticed" class="form-control col-sm-8" @bind-Value="Input.YearsPracticed" placeholder="Enter Years Practiced"></InputNumber>
+        </div>
+        <div class="form-group row">
+            <label for="expertiseAchieved" class="col-sm-3">Expertise Achieved:</label>
+            <InputNumber id="expertiseAchieved" class="form-control col-sm-8" @bind-Value="Input.ExpertiseAchieved" placeholder="Enter Expertise Achieved"></InputNumber>
+        </div>
 
-    <button type="submit">Submit</button>
-</EditForm>
+        <button type="submit">Submit</button>
+    </EditForm>
 
 }
 else
@@ -42,6 +39,7 @@ else
 
 @code {
 
+    #region Member Variables
     public HobbyInput Input { get; set; } = new HobbyInput();
 
     [Parameter]
@@ -66,7 +64,9 @@ else
 
     protected bool Saved;
     protected string Message;
+    #endregion
 
+    #region OnInitializedAsync
     protected override async Task OnInitializedAsync()
     {
         Saved = false;
@@ -77,7 +77,9 @@ else
 
         await base.OnInitializedAsync();
     }
+    #endregion
 
+    #region Submit
     protected async Task Submit()
     {
 
@@ -97,8 +99,9 @@ else
         Saved = true;
         Message = "Successfully added!";
     }
+    #endregion
 
-
+    #region HobbyInput
     public class HobbyInput
     {
         [Required]
@@ -107,5 +110,6 @@ else
         public int YearsPracticed { get; set; }
         public double ExpertiseAchieved { get; set; }
     }
+    #endregion
 
 }

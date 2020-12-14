@@ -41,36 +41,16 @@ namespace MyHobbyPal.GraphData
         }
         #endregion
 
+        #region GetPersonById
         public async Task<Person> GetPersonById(string personId, string partitionKey)
         {
             var graph = await GetCosmosClientGraph(environmentName);
-
             var queryResult = await graph.ReadVertex<Person>(docId: personId, partitionKey: partitionKey);
             return queryResult.Result;
         }
+        #endregion
 
-        //public async Task<IList<Person>> GetPersonByName(string givenName, string familyName)
-        //{
-        //    var graph = await GetCosmosClientGraph(environmentName);
-
-        //    if (!string.IsNullOrEmpty(givenName) && !string.IsNullOrEmpty(familyName))
-        //    {
-        //        var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.GivenName}','{givenName}').has('{Constant.FieldName.FamilyName}','{familyName}')");
-        //        return (IList<Person>)queryResult.Result;
-        //    }
-        //    else if(!string.IsNullOrEmpty(givenName) && string.IsNullOrEmpty(familyName))
-        //    {
-        //        var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.GivenName}','{givenName}')");
-        //        return (IList<Person>)queryResult.Result;
-        //    }
-        //    else if (string.IsNullOrEmpty(givenName) && !string.IsNullOrEmpty(familyName))
-        //    {
-        //        var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.FamilyName}','{familyName}')");
-        //        return (IList<Person>)queryResult.Result;
-        //    }
-        //    return new List<Person>();
-        //}
-
+        #region GetAllPerson
         public async Task<IList<Person>> GetAllPerson()
         {
             var graph = await GetCosmosClientGraph(environmentName);
@@ -78,7 +58,9 @@ namespace MyHobbyPal.GraphData
 
             return (IList<Person>)queryResult.Result;
         }
+        #endregion
 
+        #region UpsertHobbyForPerson
         public async Task UpsertHobbyForPerson(string personId, string partitionKey, Hobby hobby, PersonHobbyLink personHobbyLink)
         {
             var graph = await GetCosmosClientGraph(environmentName);
@@ -90,7 +72,9 @@ namespace MyHobbyPal.GraphData
             var upsertPersonHobbyLinkQuery = await graph.UpsertEdge(personHobbyLink, personQuery.Result, hobby);
             if (!upsertPersonHobbyLinkQuery.IsSuccessful) throw upsertPersonHobbyLinkQuery.Error;
         }
+        #endregion
 
+        #region GetHobbiesForPerson
         public async Task<IList<Hobby>> GetHobbiesForPerson(string personId, string partitionKey)
         {
             var graph = await GetCosmosClientGraph(environmentName);
@@ -98,14 +82,18 @@ namespace MyHobbyPal.GraphData
 
             return (IList<Hobby>)queryResult.Result;
         }
+        #endregion
 
+        #region GetPersonHobbyLink
         public async Task<PersonHobbyLink> GetPersonHobbyLink(string partitionKey, string hobbyId)
         {
             var graph = await GetCosmosClientGraph(environmentName);
             var queryResult = await graph.ExecuteGremlin<PersonHobbyLink>($"g.V().has('pk','{partitionKey}').outE().where(inV().has(id, '{hobbyId}'))");
             return (PersonHobbyLink)(PersonHobbyLink)queryResult.Result.First();
         }
+        #endregion
 
+        #region UpsertPerson
         public async Task UpsertPerson(Person person)
         {
             try
@@ -116,9 +104,9 @@ namespace MyHobbyPal.GraphData
             }
             catch (Exception)
             {
-                //var baseEx = ex.GetBaseException();
                 throw;
             }
-        }
+        } 
+        #endregion
     }
 }

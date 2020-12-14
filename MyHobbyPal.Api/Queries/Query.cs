@@ -40,15 +40,6 @@ namespace MyHobbyPal.Api.Queries
         }
         #endregion
 
-        //#region GetPersonByName
-        //public async Task<IList<Person>> GetPersonByName(string? givenName, string? familyName)
-        //{
-        //    //IList<Person> personTypes = new List<Person>();
-        //    var persons = await repository.GetPersonByName(givenName, familyName);
-        //    return persons;
-        //}
-        //#endregion
-
         #region GetPersonWithHobbies
         public async Task<PersonWithHobbies> GetPersonWithHobbies(string? personId, string? partitionKey)
         {

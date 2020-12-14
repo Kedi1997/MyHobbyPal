@@ -1,5 +1,4 @@
 ﻿@page "/persondetail/{personId}/{partitionKey}"
-@inject IMyHobbyPalClient MyHobbyPalClient
 
 <h3>PersonDetail</h3>
 
@@ -53,6 +52,7 @@ else
 
 @code {
 
+    #region Member Variables
     [Parameter]
     public string PersonId { get; set; }
     [Parameter]
@@ -60,8 +60,10 @@ else
 
     public IPersonDetail Person { get; set; }
 
-    public IList<IHobbyDetail> Hobbies { get; set; }
+    public IList<IHobbyDetail> Hobbies { get; set; } 
+    #endregion
 
+    #region OnInitializedAsync
     protected override async Task OnInitializedAsync()
     {
         var result = await MyHobbyPalClient.GetPersonWithHobbiesAsync(PersonId, PartitionKey);
@@ -69,4 +71,5 @@ else
         Person = result.Data!.PersonWithHobbies.Person;
         Hobbies = result.Data!.PersonWithHobbies.Hobbies.ToList<IHobbyDetail>();
     }
+    #endregion
 }
