@@ -107,7 +107,7 @@
             var result = await MyHobbyPalClient.GetPersonByNameAsync(Input.GivenName, Input.FamilyName);
             result.EnsureNoErrors();
 
-            Persons = result.Data!.Person.ToList<IPersonDetail>();
+            Persons = result.Data!.PersonByName.ToList<IPersonDetail>();
             StateHasChanged();
         }
 
@@ -115,7 +115,7 @@
 
     public async Task Previous()
     {
-        var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, before: PageInfo.StartCursor);
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(last: Count, before: PageInfo.StartCursor);
         result.EnsureNoErrors();
 
         Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();

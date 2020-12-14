@@ -10,11 +10,11 @@ namespace MyHobbyPal.Client
         : IGetPersonByName
     {
         public GetPersonByName(
-            global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IPersonType2> person)
+            global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IPersonDetail> personByName)
         {
-            Person = person;
+            PersonByName = personByName;
         }
 
-        public global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IPersonType2> Person { get; }
+        public global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IPersonDetail> PersonByName { get; }
     }
 }

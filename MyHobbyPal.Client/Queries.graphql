@@ -1,10 +1,7 @@
 ﻿query getAllPersons($first:Int $after:String $last:Int $before:String){
   persons(first:$first, after:$after, last:$last, before:$before){
     nodes{
-        ...personDetail
-        hobbies{
-          ...hobbyDetail
-        }
+       ...personDetail
       }
     pageInfo{
       hasNextPage
@@ -15,9 +12,12 @@
   }
 }
 
-query getPersonById($personId: String! $partitionKey:String!){
-    person(personId: $personId, partitionKey:$partitionKey ){
-        ...personDetail
+
+query getPersonHobbies($personId: String! $partitionKey:String!){
+    personHobbies(personId: $personId, partitionKey:$partitionKey ){
+        person{
+          ...personDetail
+        }
         hobbies{
           ...hobbyDetail
         }
@@ -25,18 +25,17 @@ query getPersonById($personId: String! $partitionKey:String!){
 }
 
 query getPersonByName($givenName:String! $familyName:String!){
-  person(givenName:$givenName, familyName:$familyName){
+  personByName(givenName:$givenName, familyName:$familyName){
     ...personDetail
-    hobbies{
-      ...hobbyDetail
-    }
   }
 }
 
 mutation UpsertPerson($person: UpsertPersonInput!){
   upsertPerson(input:$person){
     personType{
-      ...personDetail
+        person{
+          ...personDetail
+        }
     }
   }
 }
@@ -49,7 +48,7 @@ mutation upsertHobbyForPerson($upsertHobbyForPerson: UpsertHobbyForPersonInput!)
   }
 }
 
-fragment personDetail on PersonType{
+fragment personDetail on Person{
     personId
     partitionKey
     familyName

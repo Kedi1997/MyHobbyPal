@@ -32,7 +32,7 @@ else
 
         </thead>
         <tbody>
-            @foreach (var h in Person.Hobbies)
+            @foreach (var h in Hobbies)
             {
             <tr>
                 <td>
@@ -58,16 +58,17 @@ else
     [Parameter]
     public string PartitionKey { get; set; }
 
-    public IPersonType1 Person { get; set; }
+    public IPersonDetail Person { get; set; }
 
-
+    public IList<IHobbyDetail> Hobbies { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
 
-        var result = await MyHobbyPalClient.GetPersonByIdAsync(PersonId, PartitionKey);
+        var result = await MyHobbyPalClient.GetPersonHobbiesAsync(PersonId, PartitionKey);
         result.EnsureNoErrors();
-        Person = result.Data!.Person.ToList<IPersonType1>().FirstOrDefault();
+        Person = result.Data!.PersonHobbies.Person;
+        Hobbies = result.Data!.PersonHobbies.Hobbies.ToList<IHobbyDetail>();
 
     }
 }

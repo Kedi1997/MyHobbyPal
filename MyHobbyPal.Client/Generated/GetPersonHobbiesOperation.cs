@@ -6,16 +6,16 @@ using StrawberryShake;
 namespace MyHobbyPal.Client
 {
     [System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "11.0.0")]
-    public partial class GetPersonByIdOperation
-        : IOperation<IGetPersonById>
+    public partial class GetPersonHobbiesOperation
+        : IOperation<IGetPersonHobbies>
     {
-        public string Name => "getPersonById";
+        public string Name => "getPersonHobbies";
 
         public IDocument Document => Queries.Default;
 
         public OperationKind Kind => OperationKind.Query;
 
-        public Type ResultType => typeof(IGetPersonById);
+        public Type ResultType => typeof(IGetPersonHobbies);
 
         public Optional<string> PersonId { get; set; }
 

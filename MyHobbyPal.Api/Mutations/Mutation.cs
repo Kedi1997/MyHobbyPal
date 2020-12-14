@@ -40,11 +40,12 @@ namespace MyHobbyPal.Api.Mutations
 
             var personType = new PersonType
             {
-                PartitionKey = input.PartitionKey,
-                PersonId = input.PersonId,
-                FamilyName = input.FamilyName,
-                GivenName = input.GivenName,
-                PhoneNumbers = input.PhoneNumbers
+                //PartitionKey = input.PartitionKey,
+                //PersonId = input.PersonId,
+                //FamilyName = input.FamilyName,
+                //GivenName = input.GivenName,
+                //PhoneNumbers = input.PhoneNumbers
+                Person = person
             };
 
             await repository.UpsertPerson(person);

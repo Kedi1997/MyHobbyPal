@@ -27,42 +27,44 @@ namespace MyHobbyPal.Api.Queries
         [UsePaging]
         [UseFiltering]
         [UseProjection]
-        public async Task<IList<PersonType>> GetPersons()
+        public async Task<IList<Person>> GetPersons()
         {
-            IList<PersonType> personTypes = new List<PersonType>();
+            //IList<Person> personTypes = new List<Person>();
             var persons = await repository.GetAllPerson();
-
-            foreach (Person person in persons)
-            {
-                personTypes.Add(await GetPersonTypeExtensionsAsync(person));
-            }
-            return personTypes;
+            return persons;
+            //foreach (Person person in persons)
+            //{
+            //    personTypes.Add(new PersonType(person));
+            //}
+            //return personTypes;
         }
         #endregion
 
-        #region GetPerson
-        public async Task<IList<PersonType>> GetPerson(string? personId, string? partitionKey, string? givenName, string? familyName)
+        #region GetPersonByName
+        public async Task<IList<Person>> GetPersonByName(string? givenName, string? familyName)
         {
-            IList<PersonType> personTypes = new List<PersonType>();
+            //IList<Person> personTypes = new List<Person>();
+            var persons = await repository.GetPersonByName(givenName, familyName);
+            return persons;
+        }
+        #endregion
+
+        #region GetPersonHobbies
+        public async Task<PersonType> GetPersonHobbies(string? personId, string? partitionKey)
+        {
+            PersonType personType = new PersonType();
             if (!string.IsNullOrEmpty(personId) && !string.IsNullOrEmpty(partitionKey))
             {
                 var person = await repository.GetPersonById(personId, partitionKey);
-                personTypes.Add(await GetPersonTypeExtensionsAsync(person));
+                personType = await GetPersonTypeExtensionsAsync(person);
             }
-            else
-            {
-                var persons = await repository.GetPersonByName(givenName, familyName);
-                foreach (Person person in persons)
-                {
-                    personTypes.Add(await GetPersonTypeExtensionsAsync(person));
-                }
-            }
-            return personTypes;
+            return personType;
         }
-        #endregion
 
-        #region GetPersonTypeExtensionsAsync
-        private async Task<PersonType> GetPersonTypeExtensionsAsync(Person person)
+            #endregion
+
+            #region GetPersonTypeExtensionsAsync
+            private async Task<PersonType> GetPersonTypeExtensionsAsync(Person person)
         {
             IList<HobbyType> hobbies = new List<HobbyType>();
 
@@ -80,11 +82,7 @@ namespace MyHobbyPal.Api.Queries
 
             return new PersonType
             {
-                PersonId = person.PersonId,
-                PartitionKey = person.PartitionKey,
-                FamilyName = person.FamilyName,
-                GivenName = person.GivenName,
-                PhoneNumbers = person.PhoneNumbers,
+                Person = person,
                 Hobbies = hobbies
             };
         } 

@@ -41,7 +41,7 @@ namespace MyHobbyPal.Client
                 .AddValueSerializer(() => new UpsertPersonInputSerializer())
                 .AddValueSerializer(() => new UpsertHobbyForPersonInputSerializer())
                 .AddResultParser(serializers => new GetAllPersonsResultParser(serializers))
-                .AddResultParser(serializers => new GetPersonByIdResultParser(serializers))
+                .AddResultParser(serializers => new GetPersonHobbiesResultParser(serializers))
                 .AddResultParser(serializers => new GetPersonByNameResultParser(serializers))
                 .AddResultParser(serializers => new UpsertPersonResultParser(serializers))
                 .AddResultParser(serializers => new UpsertHobbyForPersonResultParser(serializers))

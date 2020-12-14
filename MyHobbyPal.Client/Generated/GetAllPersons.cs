@@ -10,11 +10,11 @@ namespace MyHobbyPal.Client
         : IGetAllPersons
     {
         public GetAllPersons(
-            global::MyHobbyPal.Client.IPersonTypeConnection persons)
+            global::MyHobbyPal.Client.IPersonConnection persons)
         {
             Persons = persons;
         }
 
-        public global::MyHobbyPal.Client.IPersonTypeConnection Persons { get; }
+        public global::MyHobbyPal.Client.IPersonConnection Persons { get; }
     }
 }

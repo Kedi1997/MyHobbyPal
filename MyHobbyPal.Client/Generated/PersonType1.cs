@@ -10,31 +10,11 @@ namespace MyHobbyPal.Client
         : IPersonType1
     {
         public PersonType1(
-            global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> hobbies, 
-            string personId, 
-            string partitionKey, 
-            string familyName, 
-            string givenName, 
-            IReadOnlyList<string> phoneNumbers)
+            global::MyHobbyPal.Client.IPersonDetail person)
         {
-            Hobbies = hobbies;
-            PersonId = personId;
-            PartitionKey = partitionKey;
-            FamilyName = familyName;
-            GivenName = givenName;
-            PhoneNumbers = phoneNumbers;
+            Person = person;
         }
 
-        public global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> Hobbies { get; }
-
-        public string PersonId { get; }
-
-        public string PartitionKey { get; }
-
-        public string FamilyName { get; }
-
-        public string GivenName { get; }
-
-        public IReadOnlyList<string> PhoneNumbers { get; }
+        public global::MyHobbyPal.Client.IPersonDetail Person { get; }
     }
 }

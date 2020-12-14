@@ -21,28 +21,28 @@ namespace MyHobbyPal.Client
         };
         private readonly byte[] _hash = new byte[]
         {
-            103,
-            113,
-            51,
+            109,
+            105,
+            88,
+            87,
+            76,
+            75,
+            47,
+            80,
+            109,
             66,
-            90,
-            55,
-            54,
+            52,
+            102,
+            89,
+            84,
+            89,
+            83,
+            119,
+            99,
+            48,
             86,
             56,
-            87,
-            89,
-            65,
-            79,
-            113,
-            86,
-            78,
-            79,
-            103,
-            74,
-            107,
-            113,
-            65,
+            81,
             61,
             61
         };
@@ -245,45 +245,6 @@ namespace MyHobbyPal.Client
             105,
             108,
             32,
-            104,
-            111,
-            98,
-            98,
-            105,
-            101,
-            115,
-            32,
-            123,
-            32,
-            95,
-            95,
-            116,
-            121,
-            112,
-            101,
-            110,
-            97,
-            109,
-            101,
-            32,
-            46,
-            46,
-            46,
-            32,
-            104,
-            111,
-            98,
-            98,
-            121,
-            68,
-            101,
-            116,
-            97,
-            105,
-            108,
-            32,
-            125,
-            32,
             125,
             32,
             112,
@@ -379,10 +340,13 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
-            66,
-            121,
-            73,
-            100,
+            72,
+            111,
+            98,
+            98,
+            105,
+            101,
+            115,
             40,
             36,
             112,
@@ -436,6 +400,13 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
+            72,
+            111,
+            98,
+            98,
+            105,
+            101,
+            115,
             40,
             112,
             101,
@@ -500,6 +471,26 @@ namespace MyHobbyPal.Client
             109,
             101,
             32,
+            112,
+            101,
+            114,
+            115,
+            111,
+            110,
+            32,
+            123,
+            32,
+            95,
+            95,
+            116,
+            121,
+            112,
+            101,
+            110,
+            97,
+            109,
+            101,
+            32,
             46,
             46,
             46,
@@ -516,6 +507,8 @@ namespace MyHobbyPal.Client
             97,
             105,
             108,
+            32,
+            125,
             32,
             104,
             111,
@@ -633,6 +626,12 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
+            66,
+            121,
+            78,
+            97,
+            109,
+            101,
             40,
             103,
             105,
@@ -712,45 +711,6 @@ namespace MyHobbyPal.Client
             105,
             108,
             32,
-            104,
-            111,
-            98,
-            98,
-            105,
-            101,
-            115,
-            32,
-            123,
-            32,
-            95,
-            95,
-            116,
-            121,
-            112,
-            101,
-            110,
-            97,
-            109,
-            101,
-            32,
-            46,
-            46,
-            46,
-            32,
-            104,
-            111,
-            98,
-            98,
-            121,
-            68,
-            101,
-            116,
-            97,
-            105,
-            108,
-            32,
-            125,
-            32,
             125,
             32,
             125,
@@ -874,6 +834,26 @@ namespace MyHobbyPal.Client
             109,
             101,
             32,
+            112,
+            101,
+            114,
+            115,
+            111,
+            110,
+            32,
+            123,
+            32,
+            95,
+            95,
+            116,
+            121,
+            112,
+            101,
+            110,
+            97,
+            109,
+            101,
+            32,
             46,
             46,
             46,
@@ -890,6 +870,8 @@ namespace MyHobbyPal.Client
             97,
             105,
             108,
+            32,
+            125,
             32,
             125,
             32,
@@ -1120,10 +1102,6 @@ namespace MyHobbyPal.Client
             115,
             111,
             110,
-            84,
-            121,
-            112,
-            101,
             32,
             123,
             32,
@@ -1364,9 +1342,6 @@ namespace MyHobbyPal.Client
               persons(first: $first, after: $after, last: $last, before: $before) {
                 nodes {
                   ... personDetail
-                  hobbies {
-                    ... hobbyDetail
-                  }
                 }
                 pageInfo {
                   hasNextPage
@@ -1377,9 +1352,11 @@ namespace MyHobbyPal.Client
               }
             }
             
-            query getPersonById($personId: String!, $partitionKey: String!) {
-              person(personId: $personId, partitionKey: $partitionKey) {
-                ... personDetail
+            query getPersonHobbies($personId: String!, $partitionKey: String!) {
+              personHobbies(personId: $personId, partitionKey: $partitionKey) {
+                person {
+                  ... personDetail
+                }
                 hobbies {
                   ... hobbyDetail
                 }
@@ -1387,18 +1364,17 @@ namespace MyHobbyPal.Client
             }
             
             query getPersonByName($givenName: String!, $familyName: String!) {
-              person(givenName: $givenName, familyName: $familyName) {
+              personByName(givenName: $givenName, familyName: $familyName) {
                 ... personDetail
-                hobbies {
-                  ... hobbyDetail
-                }
               }
             }
             
             mutation UpsertPerson($person: UpsertPersonInput!) {
               upsertPerson(input: $person) {
                 personType {
-                  ... personDetail
+                  person {
+                    ... personDetail
+                  }
                 }
               }
             }
@@ -1411,7 +1387,7 @@ namespace MyHobbyPal.Client
               }
             }
             
-            fragment personDetail on PersonType {
+            fragment personDetail on Person {
               personId
               partitionKey
               familyName

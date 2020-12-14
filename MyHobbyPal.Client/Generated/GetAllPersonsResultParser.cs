@@ -16,8 +16,6 @@ namespace MyHobbyPal.Client
     {
         private readonly IValueSerializer _stringSerializer;
         private readonly IValueSerializer _booleanSerializer;
-        private readonly IValueSerializer _floatSerializer;
-        private readonly IValueSerializer _intSerializer;
 
         public GetAllPersonsResultParser(IValueSerializerCollection serializerResolver)
         {
@@ -27,8 +25,6 @@ namespace MyHobbyPal.Client
             }
             _stringSerializer = serializerResolver.Get("String");
             _booleanSerializer = serializerResolver.Get("Boolean");
-            _floatSerializer = serializerResolver.Get("Float");
-            _intSerializer = serializerResolver.Get("Int");
         }
 
         protected override IGetAllPersons ParserData(JsonElement data)
@@ -40,7 +36,7 @@ namespace MyHobbyPal.Client
 
         }
 
-        private global::MyHobbyPal.Client.IPersonTypeConnection ParseGetAllPersonsPersons(
+        private global::MyHobbyPal.Client.IPersonConnection ParseGetAllPersonsPersons(
             JsonElement parent,
             string field)
         {
@@ -54,14 +50,14 @@ namespace MyHobbyPal.Client
                 return null;
             }
 
-            return new PersonTypeConnection
+            return new PersonConnection
             (
                 ParseGetAllPersonsPersonsNodes(obj, "nodes"),
                 ParseGetAllPersonsPersonsPageInfo(obj, "pageInfo")
             );
         }
 
-        private global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IPersonType> ParseGetAllPersonsPersonsNodes(
+        private global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IPersonDetail> ParseGetAllPersonsPersonsNodes(
             JsonElement parent,
             string field)
         {
@@ -76,18 +72,17 @@ namespace MyHobbyPal.Client
             }
 
             int objLength = obj.GetArrayLength();
-            var list = new global::MyHobbyPal.Client.IPersonType[objLength];
+            var list = new global::MyHobbyPal.Client.IPersonDetail[objLength];
             for (int objIndex = 0; objIndex < objLength; objIndex++)
             {
                 JsonElement element = obj[objIndex];
-                list[objIndex] = new PersonType
+                list[objIndex] = new PersonDetail
                 (
-                    ParseGetAllPersonsPersonsNodesHobbies(element, "hobbies"),
                     DeserializeNullableString(element, "personId"),
                     DeserializeNullableString(element, "partitionKey"),
                     DeserializeNullableString(element, "familyName"),
                     DeserializeNullableString(element, "givenName"),
-                    DeserializeNullableListOfString(element, "phoneNumbers")
+                    DeserializeNullableListOfNullableString(element, "phoneNumbers")
                 );
 
             }
@@ -110,61 +105,6 @@ namespace MyHobbyPal.Client
             );
         }
 
-        private global::System.Collections.Generic.IReadOnlyList<global::MyHobbyPal.Client.IHobbyDetail> ParseGetAllPersonsPersonsNodesHobbies(
-            JsonElement parent,
-            string field)
-        {
-            if (!parent.TryGetProperty(field, out JsonElement obj))
-            {
-                return null;
-            }
-
-            if (obj.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            int objLength = obj.GetArrayLength();
-            var list = new global::MyHobbyPal.Client.IHobbyDetail[objLength];
-            for (int objIndex = 0; objIndex < objLength; objIndex++)
-            {
-                JsonElement element = obj[objIndex];
-                list[objIndex] = new HobbyDetail
-                (
-                    ParseGetAllPersonsPersonsNodesHobbiesHobby(element, "hobby"),
-                    DeserializeNullableFloat(element, "expertiseAchieved"),
-                    DeserializeNullableInt(element, "yearsPracticed"),
-                    DeserializeNullableString(element, "personHobbyId")
-                );
-
-            }
-
-            return list;
-        }
-
-        private global::MyHobbyPal.Client.IHobby ParseGetAllPersonsPersonsNodesHobbiesHobby(
-            JsonElement parent,
-            string field)
-        {
-            if (!parent.TryGetProperty(field, out JsonElement obj))
-            {
-                return null;
-            }
-
-            if (obj.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            return new Hobby
-            (
-                DeserializeNullableString(obj, "hobbyId"),
-                DeserializeNullableString(obj, "partitionKey"),
-                DeserializeNullableString(obj, "name"),
-                DeserializeNullableFloat(obj, "difficulty")
-            );
-        }
-
         private string DeserializeNullableString(JsonElement obj, string fieldName)
         {
             if (!obj.TryGetProperty(fieldName, out JsonElement value))
@@ -180,7 +120,7 @@ namespace MyHobbyPal.Client
             return (string)_stringSerializer.Deserialize(value.GetString());
         }
 
-        private IReadOnlyList<string> DeserializeNullableListOfString(JsonElement obj, string fieldName)
+        private IReadOnlyList<string> DeserializeNullableListOfNullableString(JsonElement obj, string fieldName)
         {
             if (!obj.TryGetProperty(fieldName, out JsonElement list))
             {
@@ -198,7 +138,14 @@ namespace MyHobbyPal.Client
             for (int i = 0; i < listLength; i++)
             {
                 JsonElement element = list[i];
-                listList[i] = (string)_stringSerializer.Deserialize(element.GetString());
+                if (element.ValueKind == JsonValueKind.Null)
+                {
+                    listList[i] = null;
+                }
+                else
+                {
+                    listList[i] = (string)_stringSerializer.Deserialize(element.GetString());
+                }
             }
             return listList;
         }
@@ -206,35 +153,6 @@ namespace MyHobbyPal.Client
         {
             JsonElement value = obj.GetProperty(fieldName);
             return (bool)_booleanSerializer.Deserialize(value.GetBoolean());
-        }
-        private double? DeserializeNullableFloat(JsonElement obj, string fieldName)
-        {
-            if (!obj.TryGetProperty(fieldName, out JsonElement value))
-            {
-                return null;
-            }
-
-            if (value.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            return (double?)_floatSerializer.Deserialize(value.GetDouble());
-        }
-
-        private int? DeserializeNullableInt(JsonElement obj, string fieldName)
-        {
-            if (!obj.TryGetProperty(fieldName, out JsonElement value))
-            {
-                return null;
-            }
-
-            if (value.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            return (int?)_intSerializer.Deserialize(value.GetInt32());
         }
     }
 }

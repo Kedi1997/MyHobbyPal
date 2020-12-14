@@ -51,7 +51,7 @@ namespace MyHobbyPal.Client
             return _executor.ExecuteAsync(operation, cancellationToken);
         }
 
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonById>> GetPersonByIdAsync(
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonHobbies>> GetPersonHobbiesAsync(
             global::StrawberryShake.Optional<string> personId = default,
             global::StrawberryShake.Optional<string> partitionKey = default,
             global::System.Threading.CancellationToken cancellationToken = default)
@@ -67,7 +67,7 @@ namespace MyHobbyPal.Client
             }
 
             return _executor.ExecuteAsync(
-                new GetPersonByIdOperation
+                new GetPersonHobbiesOperation
                 {
                     PersonId = personId, 
                     PartitionKey = partitionKey
@@ -75,8 +75,8 @@ namespace MyHobbyPal.Client
                 cancellationToken);
         }
 
-        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonById>> GetPersonByIdAsync(
-            GetPersonByIdOperation operation,
+        public global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<global::MyHobbyPal.Client.IGetPersonHobbies>> GetPersonHobbiesAsync(
+            GetPersonHobbiesOperation operation,
             global::System.Threading.CancellationToken cancellationToken = default)
         {
             if (operation is null)

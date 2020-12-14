@@ -4,8 +4,9 @@ schema {
 }
 
 type Query {
-  persons(first: Int after: String last: Int before: String): PersonTypeConnection
-  person(personId: String partitionKey: String givenName: String familyName: String): [PersonType!]!
+  persons(first: Int after: String last: Int before: String where: PersonFilterInput): PersonConnection
+  personByName(givenName: String familyName: String): [Person!]!
+  personHobbies(personId: String partitionKey: String): PersonType!
 }
 
 type Mutation {
@@ -13,23 +14,54 @@ type Mutation {
   upsertHobbyForPerson(input: UpsertHobbyForPersonInput!): UpsertHobbyForPersonPayload!
 }
 
-type PersonType {
+type Person {
   personId: String
   partitionKey: String
   givenName: String
   familyName: String
-  phoneNumbers: [String!]
-  hobbies: [HobbyType!]
+  phoneNumbers: [String]
+}
+
+input PersonFilterInput {
+  and: [PersonFilterInput!]
+  or: [PersonFilterInput!]
+  personId: StringOperationFilterInput
+  partitionKey: StringOperationFilterInput
+  givenName: StringOperationFilterInput
+  familyName: StringOperationFilterInput
+  phoneNumbers: ListStringOperationFilterInput
 }
 
 "A connection to a list of items."
-type PersonTypeConnection {
+type PersonConnection {
   "Information to aid in pagination."
   pageInfo: PageInfo!
   "A list of edges."
-  edges: [PersonTypeEdge!]
+  edges: [PersonEdge!]
   "A flattened list of the nodes."
-  nodes: [PersonType!]
+  nodes: [Person!]
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input ListStringOperationFilterInput {
+  all: StringOperationFilterInput
+  none: StringOperationFilterInput
+  some: StringOperationFilterInput
+  any: Boolean
 }
 
 "Information about pagination in a connection."
@@ -45,19 +77,24 @@ type PageInfo {
 }
 
 "An edge in a connection."
-type PersonTypeEdge {
+type PersonEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: PersonType!
-}
-
-type UpsertHobbyForPersonPayload {
-  hobbyType: HobbyType!
+  node: Person!
 }
 
 type PersonPayload {
   personType: PersonType!
+}
+
+type PersonType {
+  person: Person
+  hobbies: [HobbyType!]
+}
+
+type UpsertHobbyForPersonPayload {
+  hobbyType: HobbyType!
 }
 
 input UpsertPersonInput {

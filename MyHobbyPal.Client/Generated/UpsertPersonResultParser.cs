@@ -46,11 +46,31 @@ namespace MyHobbyPal.Client
             );
         }
 
-        private global::MyHobbyPal.Client.IPersonDetail ParseUpsertPersonUpsertPersonPersonType(
+        private global::MyHobbyPal.Client.IPersonType1 ParseUpsertPersonUpsertPersonPersonType(
             JsonElement parent,
             string field)
         {
             JsonElement obj = parent.GetProperty(field);
+
+            return new PersonType1
+            (
+                ParseUpsertPersonUpsertPersonPersonTypePerson(obj, "person")
+            );
+        }
+
+        private global::MyHobbyPal.Client.IPersonDetail ParseUpsertPersonUpsertPersonPersonTypePerson(
+            JsonElement parent,
+            string field)
+        {
+            if (!parent.TryGetProperty(field, out JsonElement obj))
+            {
+                return null;
+            }
+
+            if (obj.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
 
             return new PersonDetail
             (
@@ -58,7 +78,7 @@ namespace MyHobbyPal.Client
                 DeserializeNullableString(obj, "partitionKey"),
                 DeserializeNullableString(obj, "familyName"),
                 DeserializeNullableString(obj, "givenName"),
-                DeserializeNullableListOfString(obj, "phoneNumbers")
+                DeserializeNullableListOfNullableString(obj, "phoneNumbers")
             );
         }
 
@@ -77,7 +97,7 @@ namespace MyHobbyPal.Client
             return (string)_stringSerializer.Deserialize(value.GetString());
         }
 
-        private IReadOnlyList<string> DeserializeNullableListOfString(JsonElement obj, string fieldName)
+        private IReadOnlyList<string> DeserializeNullableListOfNullableString(JsonElement obj, string fieldName)
         {
             if (!obj.TryGetProperty(fieldName, out JsonElement list))
             {
@@ -95,7 +115,14 @@ namespace MyHobbyPal.Client
             for (int i = 0; i < listLength; i++)
             {
                 JsonElement element = list[i];
-                listList[i] = (string)_stringSerializer.Deserialize(element.GetString());
+                if (element.ValueKind == JsonValueKind.Null)
+                {
+                    listList[i] = null;
+                }
+                else
+                {
+                    listList[i] = (string)_stringSerializer.Deserialize(element.GetString());
+                }
             }
             return listList;
         }

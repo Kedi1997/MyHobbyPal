@@ -10,11 +10,11 @@ namespace MyHobbyPal.Client
         : IPersonPayload
     {
         public PersonPayload(
-            global::MyHobbyPal.Client.IPersonDetail personType)
+            global::MyHobbyPal.Client.IPersonType1 personType)
         {
             PersonType = personType;
         }
 
-        public global::MyHobbyPal.Client.IPersonDetail PersonType { get; }
+        public global::MyHobbyPal.Client.IPersonType1 PersonType { get; }
     }
 }
