@@ -1,15 +1,14 @@
 ﻿using MyHobbyPal.Api.Types;
-using MyHobbyPal.GraphData;
 
 namespace MyHobbyPal.Api.Mutations
 {
     public class UpsertHobbyForPersonPayload
     {
-       public Types.Hobby HobbyType { get; set; }
+       public Hobby Hobby { get; set; }
 
-        public UpsertHobbyForPersonPayload(Types.Hobby hobbyType)
+        public UpsertHobbyForPersonPayload(Hobby hobby)
         {
-            HobbyType = hobbyType;
+            Hobby = hobby;
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using HotChocolate;
-using MyHobbyPal.Api.Types;
+﻿using MyHobbyPal.Api.Types;
 using MyHobbyPal.GraphData;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyHobbyPal.Api.Mutations
@@ -38,18 +35,8 @@ namespace MyHobbyPal.Api.Mutations
                 PhoneNumbers = input.PhoneNumbers
             };
 
-            var personType = new PersonWithHobbies
-            {
-                //PartitionKey = input.PartitionKey,
-                //PersonId = input.PersonId,
-                //FamilyName = input.FamilyName,
-                //GivenName = input.GivenName,
-                //PhoneNumbers = input.PhoneNumbers
-                Person = person
-            };
-
             await repository.UpsertPerson(person);
-            return new PersonPayload(personType);
+            return new PersonPayload(person);
         }
         #endregion
 
@@ -64,7 +51,7 @@ namespace MyHobbyPal.Api.Mutations
                 Difficulty = input.Difficulty
             };
 
-            var personHobbyLink = new PersonHobbyLink
+            var personHobbyLink = new GraphData.PersonHobbyLink
             {
                 PersonHobbyId = string.IsNullOrEmpty(input.PersonHobbyId) ? Guid.NewGuid().ToString("D") : input.PersonHobbyId,
                 PartitionKey = input.PartitionKey,
