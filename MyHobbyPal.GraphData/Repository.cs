@@ -49,27 +49,27 @@ namespace MyHobbyPal.GraphData
             return queryResult.Result;
         }
 
-        public async Task<IList<Person>> GetPersonByName(string givenName, string familyName)
-        {
-            var graph = await GetCosmosClientGraph(environmentName);
+        //public async Task<IList<Person>> GetPersonByName(string givenName, string familyName)
+        //{
+        //    var graph = await GetCosmosClientGraph(environmentName);
 
-            if (!string.IsNullOrEmpty(givenName) && !string.IsNullOrEmpty(familyName))
-            {
-                var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.GivenName}','{givenName}').has('{Constant.FieldName.FamilyName}','{familyName}')");
-                return (IList<Person>)queryResult.Result;
-            }
-            else if(!string.IsNullOrEmpty(givenName) && string.IsNullOrEmpty(familyName))
-            {
-                var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.GivenName}','{givenName}')");
-                return (IList<Person>)queryResult.Result;
-            }
-            else if (string.IsNullOrEmpty(givenName) && !string.IsNullOrEmpty(familyName))
-            {
-                var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.FamilyName}','{familyName}')");
-                return (IList<Person>)queryResult.Result;
-            }
-            return new List<Person>();
-        }
+        //    if (!string.IsNullOrEmpty(givenName) && !string.IsNullOrEmpty(familyName))
+        //    {
+        //        var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.GivenName}','{givenName}').has('{Constant.FieldName.FamilyName}','{familyName}')");
+        //        return (IList<Person>)queryResult.Result;
+        //    }
+        //    else if(!string.IsNullOrEmpty(givenName) && string.IsNullOrEmpty(familyName))
+        //    {
+        //        var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.GivenName}','{givenName}')");
+        //        return (IList<Person>)queryResult.Result;
+        //    }
+        //    else if (string.IsNullOrEmpty(givenName) && !string.IsNullOrEmpty(familyName))
+        //    {
+        //        var queryResult = await graph.ExecuteGremlin<Person>($"g.V().HasLabel('{Constant.VertexLabel.Person}').has('{Constant.FieldName.FamilyName}','{familyName}')");
+        //        return (IList<Person>)queryResult.Result;
+        //    }
+        //    return new List<Person>();
+        //}
 
         public async Task<IList<Person>> GetAllPerson()
         {

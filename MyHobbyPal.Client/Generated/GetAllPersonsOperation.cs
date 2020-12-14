@@ -25,6 +25,10 @@ namespace MyHobbyPal.Client
 
         public Optional<string> Before { get; set; }
 
+        public Optional<string> FamilyName { get; set; }
+
+        public Optional<string> GivenName { get; set; }
+
         public IReadOnlyList<VariableValue> GetVariableValues()
         {
             var variables = new List<VariableValue>();
@@ -47,6 +51,16 @@ namespace MyHobbyPal.Client
             if (Before.HasValue)
             {
                 variables.Add(new VariableValue("before", "String", Before.Value));
+            }
+
+            if (FamilyName.HasValue)
+            {
+                variables.Add(new VariableValue("familyName", "String", FamilyName.Value));
+            }
+
+            if (GivenName.HasValue)
+            {
+                variables.Add(new VariableValue("givenName", "String", GivenName.Value));
             }
 
             return variables;

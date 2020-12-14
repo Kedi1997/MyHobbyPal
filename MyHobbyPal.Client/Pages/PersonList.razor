@@ -2,6 +2,7 @@
 @inject HttpClient Http
 @inject IMyHobbyPalClient MyHobbyPalClient
 @using MyHobbyPal.Client
+@using StrawberryShake 
 
 <h3>Person list</h3>
 
@@ -85,15 +86,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await MyHobbyPalClient.GetAllPersonsAsync(first:Count);
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(first:Count, givenName: Input.GivenName, familyName: Input.FamilyName);
         result.EnsureNoErrors();
 
-        Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
-        PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
-
-        NextDisabled = !PageInfo.HasNextPage;
-
-        StateHasChanged();
+        UpdateData(result);
     }
 
     protected async Task Search()
@@ -104,40 +100,39 @@
         }
         else
         {
-            var result = await MyHobbyPalClient.GetPersonByNameAsync(Input.GivenName, Input.FamilyName);
+            var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, givenName:Input.GivenName, familyName:Input.FamilyName);
             result.EnsureNoErrors();
 
-            Persons = result.Data!.PersonByName.ToList<IPersonDetail>();
-            StateHasChanged();
+            UpdateData(result);
         }
 
     }
 
     public async Task Previous()
     {
-        var result = await MyHobbyPalClient.GetAllPersonsAsync(last: Count, before: PageInfo.StartCursor);
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(last: Count, before: PageInfo.StartCursor, givenName: Input.GivenName, familyName: Input.FamilyName);
         result.EnsureNoErrors();
 
-        Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
-        PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
-
-        PreviousDisabled = !PageInfo.HasPreviousPage;
-        NextDisabled = !PageInfo.HasNextPage;
-        StateHasChanged();
+        UpdateData(result);
     }
 
     public async Task Next()
     {
-        var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, after: PageInfo.EndCursor);
+        var result = await MyHobbyPalClient.GetAllPersonsAsync(first: Count, after: PageInfo.EndCursor, givenName: Input.GivenName, familyName: Input.FamilyName);
         result.EnsureNoErrors();
 
+        UpdateData(result);
+
+    }
+
+    protected void UpdateData(IOperationResult<global::MyHobbyPal.Client.IGetAllPersons> result)
+    {
         Persons = result.Data!.Persons.Nodes.ToList<IPersonDetail>();
         PageInfo = (PageInfo)result.Data!.Persons.PageInfo;
 
         NextDisabled = !PageInfo.HasNextPage;
         PreviousDisabled = !PageInfo.HasPreviousPage;
         StateHasChanged();
-
     }
 
     public class SearchInput

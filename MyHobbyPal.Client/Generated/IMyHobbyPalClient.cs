@@ -15,6 +15,8 @@ namespace MyHobbyPal.Client
             Optional<string> after = default,
             Optional<int?> last = default,
             Optional<string> before = default,
+            Optional<string> familyName = default,
+            Optional<string> givenName = default,
             CancellationToken cancellationToken = default);
 
         Task<IOperationResult<global::MyHobbyPal.Client.IGetAllPersons>> GetAllPersonsAsync(
@@ -28,15 +30,6 @@ namespace MyHobbyPal.Client
 
         Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonHobbies>> GetPersonHobbiesAsync(
             GetPersonHobbiesOperation operation,
-            CancellationToken cancellationToken = default);
-
-        Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonByName>> GetPersonByNameAsync(
-            Optional<string> givenName = default,
-            Optional<string> familyName = default,
-            CancellationToken cancellationToken = default);
-
-        Task<IOperationResult<global::MyHobbyPal.Client.IGetPersonByName>> GetPersonByNameAsync(
-            GetPersonByNameOperation operation,
             CancellationToken cancellationToken = default);
 
         Task<IOperationResult<global::MyHobbyPal.Client.IUpsertPerson>> UpsertPersonAsync(
