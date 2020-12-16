@@ -19,13 +19,5 @@
   <ItemGroup>
     <ProjectReference Include="..\MyHobbyPal.GraphData\MyHobbyPal.GraphData.csproj" />
   </ItemGroup>
-	
-	
-
-  <ItemGroup>
-    <None Update="schema.graphql.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 
 </Project>

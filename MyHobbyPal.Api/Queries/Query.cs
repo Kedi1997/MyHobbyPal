@@ -29,14 +29,8 @@ namespace MyHobbyPal.Api.Queries
         [UseProjection]
         public async Task<IList<Person>> GetPersons()
         {
-            //IList<Person> personTypes = new List<Person>();
             var persons = await repository.GetAllPerson();
             return persons;
-            //foreach (Person person in persons)
-            //{
-            //    personTypes.Add(new PersonType(person));
-            //}
-            //return personTypes;
         }
         #endregion
 
